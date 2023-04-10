@@ -1,0 +1,276 @@
+finish
+/clear, start
+/cwd, 'C:\Users\matenwolde\surfdrive\IntelligentMatter\03_modelling\02_singularity\01_Ansys\files'
+/filname, final_state_element
+
+x1 = 0
+y1 = 0
+local, 11, 0, x1, y1, 0, 0, 0, 0
+
+*set, w, 5e-3
+
+! state
+*set, lbs, 20e-3
+*set, lfs, 4e-3
+*set, lss, 4.0e-3 ! 5?
+*set, tbs, 2e-3 !  GENERAL BEAM THICKNESS
+*set, tfs, 0.4e-3
+*set, tss, 1.5e-3 ! 2?
+*set, ths, 8.0*2*3.1415/360
+*set, rrs, lfs/cos(ths)/sin(ths) 
+*set, lcsn, 10e-3
+
+
+
+*set, disp_in, 6e-3
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Material properties !!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+/prep7
+et, 1, beam189
+keyopt, 1, 1, 1
+
+mptemp, 1, 0
+
+mpdata, ex, 1, , 2.2e9
+mpdata, prxy, 1, , 0.4
+mpdata, dens, 1, , 1000
+
+
+
+! beam general
+sectype, 1, beam, rect,
+secdata, tbs, w, 2, 2
+secoffset, user, 0, 0
+
+
+
+! State flex
+sectype, 2, beam, rect,
+secdata, tfs, w, 2, 2
+secoffset, user, 0, 0
+
+! state compression
+sectype, 3, beam, rect,
+secdata, tss, w, 2, 2
+secoffset, user, 0, 0
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! keypoints for geometry !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+csys, 11
+
+! State element
+k, 1, -lcsn, 0, 0
+k, 2, -lcsn + lfs*tan(ths), lfs, 0
+k, 3, -lcsn + rrs, 0, 0
+k, 4, -lcsn + lbs*tan(ths), lbs, 0
+k, 5, -lcsn + lbs*tan(ths) - lfs*tan(ths), lbs-lfs, 0
+k, 6, -lcsn + lbs*tan(ths) - rrs, lbs, 0
+
+k, 7, -lcsn + lfs*tan(ths), -lfs, 0
+k, 8, -lcsn + lbs*tan(ths), -lbs, 0
+k, 9, -lcsn + lbs*tan(ths) - lfs*tan(ths), -lbs+lfs, 0
+k, 10, -lcsn + lbs*tan(ths) - rrs, -lbs, 0
+
+k, 11, -2*lcsn, 0, 0
+k, 12, -2*lcsn + lfs*tan(ths), lfs, 0
+k, 13, -2*lcsn + rrs, 0, 0
+k, 14, -2*lcsn + lbs*tan(ths), lbs, 0
+k, 15, -2*lcsn + lbs*tan(ths) - lfs*tan(ths), lbs-lfs, 0
+k, 16, -2*lcsn + lbs*tan(ths) - rrs, lbs, 0
+
+k, 17, -2*lcsn + lfs*tan(ths), -lfs, 0
+k, 18, -2*lcsn + lbs*tan(ths), -lbs, 0
+k, 19, -2*lcsn + lbs*tan(ths) - lfs*tan(ths), -lbs+lfs, 0
+k, 20, -2*lcsn + lbs*tan(ths) - rrs, -lbs, 0
+
+k, 21, -lcsn + lbs*tan(ths) - lss, lbs, 0
+k, 22, -lcsn + lbs*tan(ths) - lss, -lbs, 0
+k, 23, -2*lcsn + lbs*tan(ths) - lss, lbs, 0
+k, 24, -2*lcsn + lbs*tan(ths) - lss, -lbs, 0
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Lines cross-sec mesh !!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+! state AND spring flexures (in general)
+
+*get, Line_ID1, line, 0, num, maxd ! start is # 0 
+
+larc, 1, 2, 3, rrs
+larc, 1, 7, 3, rrs
+larc, 4, 5, 6, rrs
+larc, 8, 9, 10, rrs
+
+larc, 11, 12, 13, rrs
+larc, 11, 17, 13, rrs
+larc, 14, 15, 16, rrs
+larc, 18, 19, 20, rrs
+
+
+
+! state and spring beams ( in general)
+
+*get, Line_ID2, line, 0, num, maxd ! get a parameter with total number of lines until now (8) 
+
+l, 1, 11
+l, 2, 5
+l, 7, 9
+l, 12, 15
+l, 17, 19
+
+
+! compression springs (general)
+
+*get, Line_ID3, line, 0, num, maxd ! get a parameter with total number of lines until now (13) 
+
+l, 4, 21
+l, 8, 22
+l, 14, 23
+l, 18, 24
+
+*get, Line_ID4, line, 0, num, maxd ! get a parameter with total number of lines until now (17) 
+
+type, 1
+
+! normal flexures
+secnum, 2
+lsel, s, line, , Line_ID1+1, Line_ID2
+lesize, all, , , 20
+lmesh, all
+
+! normal beams
+secnum, 1
+lsel, s, line, , Line_ID2+1, Line_ID3
+lesize, all, , , 5
+lmesh, all
+
+! compression springs 
+secnum, 3
+lsel, s, line, , Line_ID3+1, Line_ID4
+lesize, all, , , 20
+lmesh, all
+
+
+/eshape, 1
+/view, 1, 1, 1, 1
+eplot
+
+
+! State fix
+ksel, s, , , 21
+nslk, s
+*get, id_fixs1, node, , num, min
+allsel
+
+ksel, s, , , 22
+nslk, s
+*get, id_fixs2, node, , num, min
+allsel
+
+ksel, s, , , 23
+nslk, s
+*get, id_fixs3, node, , num, min
+allsel
+
+ksel, s, , , 24
+nslk, s
+*get, id_fixs4, node, , num, min
+allsel
+
+
+! input disp_in
+ksel, s, , , 1
+nslk, s
+*get, id_disp, node, , num, min
+allsel
+
+
+! input disp_in
+ksel, s, , , 4
+nslk, s
+*get, id_check1, node, , num, min
+allsel
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!! loads !!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+/solu
+
+antype, 0
+nlgeom, on
+eqslv, sparse
+outres, all, all
+autots, on
+neqit, 30
+deltim, 1e-3, 1e-5, 1e-2, on
+
+time, 1
+d, id_fixs1, all
+d, id_fixs2, all
+d, id_fixs3, all
+d, id_fixs4, all
+
+d, id_disp, all
+d, id_disp, ux, disp_in
+solve
+*get, n_steps1, active, 0, solu, ncmss
+
+
+
+
+
+!! DISPLAY DEFORMED STATE !!
+
+
+/post1
+/view, 1, 0, 0, 1
+subset, last
+pldisp, 1
+
+
+
+/post26
+nsol, 2, id_disp, u, x, displacement
+rforce, 3, id_disp, F, x, force ! nsol, 3, id_fix6, u, y, displacement
+xvar, 2
+plvar, 3
+
+
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!  save plot .txt file !!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+*create, scratch,gui
+	*del, var_export
+	*dim, var_export, table, n_steps1 + n_steps2 + n_steps3 + n_steps4, 3
+	vget, var_export(1,0), 1
+	vget, var_export(1,1), 2
+	vget, var_export(1,2), 3
+/output, 'result_final_lumped_state_v2','txt','C:\Users\matenwolde\surfdrive\IntelligentMatter\04_data\01_raw-data\02_singularity\01_fem-results'
+	*vwrite, var_export(1,0), var_export(1,1), var_export(1,2)
+	%g, %g, %g
+	/output, term
+	*end
+	/input, scratch, gui
