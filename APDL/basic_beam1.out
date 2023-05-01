@@ -89,27 +89,27 @@
 
 
           *****  ANSYS COMMAND LINE ARGUMENTS  *****
-  INITIAL JOBNAME              = mapdl_notebook                                                                                                                                                                                                                                          
+  INITIAL JOBNAME              = basic_beam                                                                                                                                                                                                                                              
   BATCH MODE REQUESTED (-b)    = LIST
   INPUT FILE COPY MODE (-c)    = COPY
   MPI OPTION                   = MSMPI   
   INPUT FILE NAME              = CONIN$
-  OUTPUT FILE NAME             = c:\Users\eoinl\ThesisCode\Thesis\APDL\mapdl_notebook1.out
+  OUTPUT FILE NAME             = c:\Users\eoinl\ThesisCode\Thesis\APDL\basic_beam1.out
 
  PARAMETER STATUS-           (   1 PARAMETERS DEFINED)
 
  NAME                              VALUE                        TYPE
- PORT                              50053.0000                    SCALAR
+ PORT                              50052.0000                    SCALAR
 
  RELEASE= 2021 R2              BUILD= 21.2      UP20210601   VERSION=WINDOWS x64 
- CURRENT JOBNAME=mapdl_notebook1  12:12:36  APR 10, 2023 CP=      0.000
+ CURRENT JOBNAME=basic_beam1  09:58:22  APR 11, 2023 CP=      0.000
 
 
 
  NUMBER OF DISPLAYED ERRORS ALLOWED PER COMMAND=                200
  NUMBER OF ERRORS ALLOWED PER COMMAND BEFORE ANSYS ABORT=     10000
  ABORT LEVEL KEY= -1
- ALL ERRORS WRITTEN TO c:\Users\eoinl\ThesisCode\Thesis\APDL\mapdl_notebook1.err                                                                                                                                                                                                           
+ ALL ERRORS WRITTEN TO c:\Users\eoinl\ThesisCode\Thesis\APDL\basic_beam1.err                                                                                                                                                                                                               
  DO NOT TERMINATE /INPUT UPON FIRST ERROR
 
  PRINTOUT RESUMED BY /GOP
@@ -120,7 +120,7 @@
 
 
  NUMBER OF WARNING MESSAGES ENCOUNTERED=          0
- NUMBER OF ERROR   MESSAGES ENCOUNTERED=          1
+ NUMBER OF ERROR   MESSAGES ENCOUNTERED=          0
 
 
  *---------------------------------------------------------------------------*
@@ -138,7 +138,7 @@
  |                                                                           |
  |---------------------------------------------------------------------------|
  |                                                                           |
- |        CP Time      (sec) =          0.000       Time  =  12:20:49        |
- |        Elapsed Time (sec) =        495.000       Date  =  04/10/2023      |
+ |        CP Time      (sec) =          0.078       Time  =  20:59:26        |
+ |        Elapsed Time (sec) =      39667.000       Date  =  04/11/2023      |
  |                                                                           |
  *---------------------------------------------------------------------------*

@@ -1,6 +1,8 @@
 import numpy as np
 from ansys.mapdl.core import launch_mapdl
 
+
+
 def generate_keypoints(mapdl, start_keypoints, end_keypoints, flexure_length):
     keypoints = []
 

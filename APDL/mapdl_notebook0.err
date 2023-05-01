@@ -6,3 +6,7 @@
  *** WARNING ***                         CP =       0.156   TIME= 12:12:37
  The geometry is not available.  Issue the RESUME command to restore the 
  database.  The NUMVAR command is ignored.                               
+
+ *** ERROR ***                           CP =       0.172   TIME= 12:13:05
+ The E command cannot store element 1, possibly because one or more      
+ nodes is not defined.                                                   

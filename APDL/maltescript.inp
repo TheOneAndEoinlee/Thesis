@@ -1,6 +1,6 @@
 finish
 /clear, start
-/cwd, 'C:\Users\matenwolde\surfdrive\IntelligentMatter\03_modelling\02_singularity\01_Ansys\files'
+/cwd, 'C:\Users\eoinl\ThesisCode\Thesis\APDL'
 /filname, final_state_element
 
 x1 = 0
@@ -259,18 +259,3 @@ plvar, 3
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!  save plot .txt file !!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-*create, scratch,gui
-	*del, var_export
-	*dim, var_export, table, n_steps1 + n_steps2 + n_steps3 + n_steps4, 3
-	vget, var_export(1,0), 1
-	vget, var_export(1,1), 2
-	vget, var_export(1,2), 3
-/output, 'result_final_lumped_state_v2','txt','C:\Users\matenwolde\surfdrive\IntelligentMatter\04_data\01_raw-data\02_singularity\01_fem-results'
-	*vwrite, var_export(1,0), var_export(1,1), var_export(1,2)
-	%g, %g, %g
-	/output, term
-	*end
-	/input, scratch, gui
