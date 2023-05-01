@@ -16,10 +16,10 @@ ph = sm.atan((h2-d2)/l2)
 
 d3 = sm.sqrt(l2**2+h2**2-(h2-d2)**2)-l2
 
-L2 = sm.sqrt(l2**2+h2**2);
+L2 = sm.sqrt(l2**2+h2**2)
 
-PE1 = 1/2*k_theta*(th0-th)**2;
-PE2 = 1/2*k_phi*(ph0-ph)**2;
+PE1 = 1/2*k_theta*(th0-th)**2
+PE2 = 1/2*k_phi*(ph0-ph)**2
 PE3 = 1/2*k_L*(d3)**2
 
 PE = 8*PE1+8*PE2+2*PE3
@@ -72,7 +72,6 @@ def evaluate(l1=10,l2=0.4,h1=4,h2=0.8,k_theta=1,k_phi=1,k_L=1,d1 =0):
     return {'F':Fl,'PE':PEl,'PE1':PE1l,'PE2':PE2l,'PE3':PE3l,'x':xs,'y':ys,'dF':dF}
 
 
-plt.close()
 
 import scipy.optimize as opt
 import numpy as np
@@ -130,6 +129,34 @@ def evalgeom(repl,lam=1/6,gamma=1/5,h1_scale=12.5, t =0.8, kL= 3):
         'kL':Ls['kL']}
 
     return geom
+
+def spring(xa, ya, xb, yb, ne=None, a=None, r0=None):
+    global Li_2, ei, b
+    
+    if ne is not None and a is not None and r0 is not None:
+        # calculating some fixed spring parameters only once time
+        Li_2 = (a/(4*ne))**2 + r0**2  # (large of a quarter of coil)^2
+        ei = np.arange(2*ne+1)        # vector of longitudinal positions
+        j = np.arange(2*ne) 
+        b = np.append([0], (-1)**j)   # vector of transversal positions
+    
+    R = np.array([xb, yb]) - np.array([xa, ya]) # relative position between "end_B" and "end_A"
+    mod_R = np.linalg.norm(R)
+    
+    L_2 = (mod_R/(4*ne))**2  # (actual longitudinal extensión of a coil )^2
+    if L_2 > Li_2:
+        raise ValueError("Initial conditions cause pulling the spring beyond its maximum large. Try reducing these conditions.")
+    else:
+        r = np.sqrt(Li_2 - L_2)  # actual radius
+    
+    c = r * b   # vector of transversal positions
+    u1 = R / mod_R
+    u2 = np.array([-u1[1], u1[0]])  # unitary longitudinal and transversal vectors
+    
+    xs = xa + u1[0] * (mod_R / (2*ne+1)) * ei + u2[0] * c
+    ys = ya + u1[1] * (mod_R / (2*ne+1)) * ei + u2[1] * c
+    
+    return xs, ys
 
 # geom = evalgeom(lam, repl, h1_scale=10, t=0.8, kL = 3)
 
