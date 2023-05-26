@@ -103,7 +103,7 @@
  PORT                              50052.0000                    SCALAR
 
  RELEASE= 2021 R2              BUILD= 21.2      UP20210601   VERSION=WINDOWS x64 
- CURRENT JOBNAME=basic_beam0  09:58:22  APR 11, 2023 CP=      0.094
+ CURRENT JOBNAME=basic_beam0  22:30:26  MAY 21, 2023 CP=      0.094
 
      1  FINISH 
 
@@ -117,7 +117,7 @@
  Server Executable   : MapdlGrpc.Server
  Server listening on : 0.0.0.0:50052
 
- *** WARNING ***                         CP =       0.094   TIME= 09:58:22
+ *** WARNING ***                         CP =       0.094   TIME= 22:30:42
  Altering the abort level key is not recommended.                        
 
 
@@ -130,7 +130,7 @@
  *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
  DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
 
- 00000000  VERSION=WINDOWS x64   09:58:22  APR 11, 2023 CP=      0.094
+ 00000000  VERSION=WINDOWS x64   22:30:42  MAY 21, 2023 CP=      0.094
 
                                                                                
 
@@ -141,14 +141,14 @@
 
  ALL POST26 SPECIFICATIONS ARE RESET TO INITIAL DEFAULTS
 
- *** NOTE ***                            CP =       0.094   TIME= 09:58:22
+ *** NOTE ***                            CP =       0.094   TIME= 22:30:42
  Geometry is not available.  Issue RESUME to restore database.           
 
- *** NOTE ***                            CP =       0.094   TIME= 09:58:22
+ *** NOTE ***                            CP =       0.094   TIME= 22:30:42
  Unable to open default results file basic_beam.rst                      
   Use FILE command to open a results file.                               
 
- *** WARNING ***                         CP =       0.094   TIME= 09:58:22
+ *** WARNING ***                         CP =       0.094   TIME= 22:30:42
  The geometry is not available.  Issue the RESUME command to restore the 
  database.  The NUMVAR command is ignored.                               
 
@@ -158,6 +158,34 @@
 
 
  /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ CLEAR ANSYS DATABASE AND RESTART
+
+ Ansys Mechanical Enterprise Academic Research     
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ CLEAR ANSYS DATABASE AND RESTART
+
+ Ansys Mechanical Enterprise Academic Research     
 
  /OUTPUT FILE= anstmp
 
@@ -191,77 +219,25 @@
 
  /OUTPUT FILE= anstmp
 
- *** NOTE ***                            CP =       0.109   TIME= 09:58:27
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ *** NOTE ***                            CP =       0.188   TIME= 22:30:48
  The component definition of __TMP_VOLU__ contains no data.              
 
  DEFINITION OF COMPONENT = __TMP_VOLU__  ENTITY=VOLU
 
- *** NOTE ***                            CP =       0.109   TIME= 09:58:27
+ *** NOTE ***                            CP =       0.188   TIME= 22:30:48
  The component definition of __TMP_AREA__ contains no data.              
 
  DEFINITION OF COMPONENT = __TMP_AREA__  ENTITY=AREA
 
- *** NOTE ***                            CP =       0.109   TIME= 09:58:27
- The component definition of __TMP_LINE__ contains no data.              
-
- DEFINITION OF COMPONENT = __TMP_LINE__  ENTITY=LINE
-
- NONE SELECT  FOR ITEM=VOLU COMPONENT=    
-  IN RANGE         0 TO          0 STEP          1
-
-        0 VOLUMES (OF        0  DEFINED) SELECTED BY VSEL  COMMAND.
-
- PARAMETER __TMPVAR__ =     1.000000000    
-
- /OUTPUT FILE= anstmp
-
- NONE SELECT  FOR ITEM=AREA COMPONENT=    
-  IN RANGE         0 TO          0 STEP          1
-
-        0 AREAS (OF        0  DEFINED) SELECTED BY ASEL  COMMAND.
-
- PARAMETER __TMPVAR__ =     1.000000000    
-
- /OUTPUT FILE= anstmp
-
- NONE SELECT  FOR ITEM=LINE COMPONENT=    
-  IN RANGE         0 TO          0 STEP          1
-
-        0 LINES (OF        0  DEFINED) SELECTED BY LSEL  COMMAND.
-
- PARAMETER __TMPVAR__ =     1.000000000    
-
- /OUTPUT FILE= anstmp
-
- /OUTPUT FILE= anstmp
-
- /OUTPUT FILE= anstmp
-
- SELECT      COMPONENT __TMP_VOLU__                    
-
- SELECT      COMPONENT __TMP_AREA__                    
-
- SELECT      COMPONENT __TMP_LINE__                    
-
- /OUTPUT FILE= anstmp
-
- /OUTPUT FILE= anstmp
-
- /OUTPUT FILE= anstmp
-
- /OUTPUT FILE= anstmp
-
- *** NOTE ***                            CP =       0.109   TIME= 09:58:28
- The component definition of __TMP_VOLU__ contains no data.              
-
- DEFINITION OF COMPONENT = __TMP_VOLU__  ENTITY=VOLU
-
- *** NOTE ***                            CP =       0.109   TIME= 09:58:28
- The component definition of __TMP_AREA__ contains no data.              
-
- DEFINITION OF COMPONENT = __TMP_AREA__  ENTITY=AREA
-
- *** NOTE ***                            CP =       0.109   TIME= 09:58:28
+ *** NOTE ***                            CP =       0.188   TIME= 22:30:48
  The component definition of __TMP_LINE__ contains no data.              
 
  DEFINITION OF COMPONENT = __TMP_LINE__  ENTITY=LINE
@@ -321,116 +297,66 @@
 
  /OUTPUT FILE= anstmp
 
- *** NOTE ***                            CP =       0.125   TIME= 09:58:30
- The component definition of __TMP_VOLU__ contains no data.              
+ /OUTPUT FILE= anstmp
 
- DEFINITION OF COMPONENT = __TMP_VOLU__  ENTITY=VOLU
+ /OUTPUT FILE= anstmp
 
- *** NOTE ***                            CP =       0.125   TIME= 09:58:30
- The component definition of __TMP_AREA__ contains no data.              
+ /OUTPUT FILE= anstmp
 
- DEFINITION OF COMPONENT = __TMP_AREA__  ENTITY=AREA
+ /OUTPUT FILE= anstmp
 
- DEFINITION OF COMPONENT = __TMP_LINE__  ENTITY=LINE
+ /OUTPUT FILE= anstmp
 
- NONE SELECT  FOR ITEM=VOLU COMPONENT=    
-  IN RANGE         0 TO          0 STEP          1
+ /OUTPUT FILE= anstmp
 
-        0 VOLUMES (OF        0  DEFINED) SELECTED BY VSEL  COMMAND.
+ /OUTPUT FILE= anstmp
+
+ /SHOW SWITCH PLOTS TO  PNG         - RASTER MODE.
+
+ GRAPHICS FILE PIXEL RESOLUTION =   1600
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ *** NOTE ***
+
+  libpng version 1.0.8 - July 24, 2000
+    Copyright (c) 1998-2000 Glenn Randers-Pehrson
+    Copyright (c) 1996, 1997 Andreas Dilger
+    Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.
+
+ ZLIB Version 1.2.11 Copyright (C) 1995-1998 Jean-loup Gailly and Mark Adler
+
+ /SHOW SWITCH PLOTS TO  PNG         - RASTER MODE.
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
 
  PARAMETER __TMPVAR__ =     1.000000000    
 
  /OUTPUT FILE= anstmp
 
- NONE SELECT  FOR ITEM=AREA COMPONENT=    
-  IN RANGE         0 TO          0 STEP          1
-
-        0 AREAS (OF        0  DEFINED) SELECTED BY ASEL  COMMAND.
-
- PARAMETER __TMPVAR__ =     1.000000000    
-
- /OUTPUT FILE= anstmp
-
- NONE SELECT  FOR ITEM=LINE COMPONENT=    
-  IN RANGE         1 TO          6 STEP          1
-
-        0 LINES (OF        6  DEFINED) SELECTED BY LSEL  COMMAND.
-
- PARAMETER __TMPVAR__ =     1.000000000    
-
- /OUTPUT FILE= anstmp
-
- /OUTPUT FILE= anstmp
-
- /OUTPUT FILE= anstmp
-
- SELECT      COMPONENT __TMP_VOLU__                    
-
- SELECT      COMPONENT __TMP_AREA__                    
-
- SELECT      COMPONENT __TMP_LINE__                    
-
- PARAMETER __TMPVAR__ =     1.000000000    
-
- /OUTPUT FILE= anstmp
-
- *** NOTE ***                            CP =       1.406   TIME= 09:58:45
- The component definition of __TMP_VOLU__ contains no data.              
-
- DEFINITION OF COMPONENT = __TMP_VOLU__  ENTITY=VOLU
-
- DEFINITION OF COMPONENT = __TMP_LINE__  ENTITY=LINE
-
- *** NOTE ***                            CP =       1.406   TIME= 09:58:45
- The component definition of __TMP_AREA__ contains no data.              
-
- DEFINITION OF COMPONENT = __TMP_AREA__  ENTITY=AREA
-
- DEFINITION OF COMPONENT = __TMP_KEYP__  ENTITY=KP  
-
- ALL SELECT   FOR ITEM=KP   COMPONENT=    
-  IN RANGE         1 TO          8 STEP          1
-
-        8  KEYPOINTS (OF        8  DEFINED) SELECTED BY  KSEL  COMMAND.
-
- PARAMETER __TMPVAR__ =     1.000000000    
-
- /OUTPUT FILE= anstmp
-
- VECTOR GET OPERATION  _MYVGET_  VECTOR LENGTH=       8
+ VECTOR GET OPERATION  _MYVGET_  VECTOR LENGTH=       4
  NAME= KP           0  KLIS      
 
- ALL SELECT   FOR ITEM=LINE COMPONENT=    
-  IN RANGE         1 TO          6 STEP          1
+ /OUTPUT FILE= anstmp
 
-        6  LINES (OF        6  DEFINED) SELECTED BY LSEL COMMAND.
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
 
  PARAMETER __TMPVAR__ =     1.000000000    
 
  /OUTPUT FILE= anstmp
 
- VECTOR GET OPERATION  _MYVGET_  VECTOR LENGTH=       6
- NAME= LINE         0  LLIS      
-
- PARAMETER __TMPVAR__ =     1.000000000    
-
- /OUTPUT FILE= anstmp
-
- ALL SELECT   FOR ITEM=AREA COMPONENT=    
-  IN RANGE         0 TO          0 STEP          1
-
-        0  AREAS (OF        0  DEFINED) SELECTED BY ASEL COMMAND.
-
- PARAMETER __TMPVAR__ =     1.000000000    
-
- /OUTPUT FILE= anstmp
-
- NONE SELECT  FOR ITEM=VOLU COMPONENT=    
-  IN RANGE         0 TO          0 STEP          1
-
-        0 VOLUMES (OF        0  DEFINED) SELECTED BY VSEL  COMMAND.
-
- PARAMETER __TMPVAR__ =     1.000000000    
+ VECTOR GET OPERATION  _MYVGET_  VECTOR LENGTH=       4
+ NAME= KP           0  KLIS      
 
  /OUTPUT FILE= anstmp
 
@@ -438,28 +364,788 @@
 
  /OUTPUT FILE= anstmp
 
- SELECT      COMPONENT __TMP_VOLU__                    
-
- SELECT      COMPONENT __TMP_AREA__                    
-
- SELECT      COMPONENT __TMP_LINE__                    
-
- SELECT      COMPONENT __TMP_KEYP__                    
-
- PARAMETER __TMPVAR__ =     1.000000000    
-
  /OUTPUT FILE= anstmp
-
- VECTOR GET OPERATION  _MYVGET_  VECTOR LENGTH=       6
- NAME= LINE         0  LLIS      
-
- PARAMETER __TMPVAR__ =     1.000000000    
 
  /OUTPUT FILE= anstmp
 
  /OUTPUT FILE= anstmp
 
  /OUTPUT FILE= anstmp
+
+ /SHOW SWITCH PLOTS TO  PNG         - RASTER MODE.
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /SHOW SWITCH PLOTS TO  PNG         - RASTER MODE.
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /SHOW SWITCH PLOTS TO  PNG         - RASTER MODE.
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /SHOW SWITCH PLOTS TO  PNG         - RASTER MODE.
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.562
+
+
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
+ DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
+
+ 00000000  VERSION=WINDOWS x64   22:42:47  MAY 21, 2023 CP=      3.578
+
+                                                                               
+
+
+
+          ***** ANSYS RESULTS INTERPRETATION (POST1) *****
+
+ *** NOTE ***                            CP =       3.578   TIME= 22:42:47
+ Reading results into the database (SET command) will update the current 
+ displacement and force boundary conditions in the database with the     
+ values from the results file for that load set.  Note that any          
+ subsequent solutions will use these values unless action is taken to    
+ either SAVE the current values or not overwrite them (/EXIT,NOSAVE).    
+
+ /OUTPUT FILE= anstmp
+
+ EXIT THE ANSYS POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.578
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.578
+
+
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
+ DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
+
+ 00000000  VERSION=WINDOWS x64   22:42:47  MAY 21, 2023 CP=      3.578
+
+                                                                               
+
+
+
+          ***** ANSYS RESULTS INTERPRETATION (POST1) *****
+
+ /OUTPUT FILE= anstmp
+
+ EXIT THE ANSYS POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.578
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
+ DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
+
+ 00000000  VERSION=WINDOWS x64   22:42:47  MAY 21, 2023 CP=      3.594
+
+                                                                               
+
+
+
+          ***** ANSYS RESULTS INTERPRETATION (POST1) *****
+
+ /OUTPUT FILE= anstmp
+
+ EXIT THE ANSYS POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
+ DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
+
+ 00000000  VERSION=WINDOWS x64   22:42:47  MAY 21, 2023 CP=      3.594
+
+                                                                               
+
+
+
+          ***** ANSYS RESULTS INTERPRETATION (POST1) *****
+
+ /OUTPUT FILE= anstmp
+
+ EXIT THE ANSYS POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
+ DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
+
+ 00000000  VERSION=WINDOWS x64   22:42:56  MAY 21, 2023 CP=      3.594
+
+                                                                               
+
+
+
+          ***** ANSYS RESULTS INTERPRETATION (POST1) *****
+
+ /OUTPUT FILE= anstmp
+
+ EXIT THE ANSYS POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
+ DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
+
+ 00000000  VERSION=WINDOWS x64   22:42:56  MAY 21, 2023 CP=      3.594
+
+                                                                               
+
+
+
+          ***** ANSYS RESULTS INTERPRETATION (POST1) *****
+
+ /OUTPUT FILE= anstmp
+
+ EXIT THE ANSYS POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
+ DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
+
+ 00000000  VERSION=WINDOWS x64   22:42:56  MAY 21, 2023 CP=      3.594
+
+                                                                               
+
+
+
+          ***** ANSYS RESULTS INTERPRETATION (POST1) *****
+
+ /OUTPUT FILE= anstmp
+
+ EXIT THE ANSYS POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
+ DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
+
+ 00000000  VERSION=WINDOWS x64   22:42:56  MAY 21, 2023 CP=      3.594
+
+                                                                               
+
+
+
+          ***** ANSYS RESULTS INTERPRETATION (POST1) *****
+
+ /OUTPUT FILE= anstmp
+
+ EXIT THE ANSYS POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
+ DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
+
+ 00000000  VERSION=WINDOWS x64   22:43:13  MAY 21, 2023 CP=      3.594
+
+                                                                               
+
+
+
+          ***** ANSYS RESULTS INTERPRETATION (POST1) *****
+
+ /OUTPUT FILE= anstmp
+
+ EXIT THE ANSYS POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
+ DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
+
+ 00000000  VERSION=WINDOWS x64   22:43:13  MAY 21, 2023 CP=      3.594
+
+                                                                               
+
+
+
+          ***** ANSYS RESULTS INTERPRETATION (POST1) *****
+
+ /OUTPUT FILE= anstmp
+
+ EXIT THE ANSYS POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
+ DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
+
+ 00000000  VERSION=WINDOWS x64   22:43:13  MAY 21, 2023 CP=      3.594
+
+                                                                               
+
+
+
+          ***** ANSYS RESULTS INTERPRETATION (POST1) *****
+
+ /OUTPUT FILE= anstmp
+
+ EXIT THE ANSYS POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *** ANSYS - ENGINEERING ANALYSIS SYSTEM  RELEASE 2021 R2          21.2     ***
+ DISTRIBUTED Ansys Mechanical Enterprise Academic Research     
+
+ 00000000  VERSION=WINDOWS x64   22:43:13  MAY 21, 2023 CP=      3.594
+
+                                                                               
+
+
+
+          ***** ANSYS RESULTS INTERPRETATION (POST1) *****
+
+ /OUTPUT FILE= anstmp
+
+ EXIT THE ANSYS POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =         3.594
+
+
+
+ *****  ANSYS SOLUTION ROUTINE  *****
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ /OUTPUT FILE= anstmp
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 20:10:58
+ License server lost for 5 minutes.  Please save your work.
+
+ License server will time out in 55 minutes if not reconnected before.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 20:16:58
+ License server lost for 10 minutes.  Please save your work.
+
+ License server will time out in 50 minutes if not reconnected before.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 20:22:58
+ License server lost for 15 minutes.  Please save your work.
+
+ License server will time out in 45 minutes if not reconnected before.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 20:28:59
+ License server lost for 20 minutes.  Please save your work.
+
+ License server will time out in 40 minutes if not reconnected before.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 20:34:58
+ License server lost for 25 minutes.  Please save your work.
+
+ License server will time out in 35 minutes if not reconnected before.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 20:40:57
+ License server lost for 30 minutes.  Please save your work.
+
+ License server will time out in 30 minutes if not reconnected before.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 20:46:57
+ License server lost for 35 minutes.  Please save your work.
+
+ License server will time out in 25 minutes if not reconnected before.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 20:52:58
+ License server lost for 40 minutes.  Please save your work.
+
+ License server will time out in 20 minutes if not reconnected before.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 20:58:58
+ License server lost for 45 minutes.  Please save your work.
+
+ License server will time out in 15 minutes if not reconnected before.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 21:04:57
+ License server lost for 50 minutes.  Please save your work.
+
+ License server will time out in 10 minutes if not reconnected before.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 21:10:57
+ License server lost for 55 minutes.  Please save your work.
+
+ License server will time out in 5 minutes if not reconnected before.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 21:16:57
+ License server lost for 60 minutes.  Please save your work.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 21:22:57
+ License server lost for 65 minutes.  Please save your work.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ WARNING:
+
+ 2023/05/22 21:28:58
+ License server lost for 70 minutes.  Please save your work.
+
+ Licensing path:
+         ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+         FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+
+ *** IMPORTANT LICENSING MESSAGE ***
+
+ ERROR:
+ Feature Ansys Mechanical Enterprise timed out. 
+     ANSYSLI_SERVERS: 28040@ansys.lic.tudelft.nl 
+     FLEXlm Servers: 27002@ansys.lic.tudelft.nl
+ Exiting... 
+
+ /OUTPUT FILE= anstmp
+
+ CLEAR ANSYS DATABASE AND RESTART
+
+ Ansys Mechanical Enterprise                       
 
  /OUTPUT FILE= anstmp
 
@@ -482,83 +1168,5 @@
   FOR POSSIBLE RESUME FROM THIS POINT
 
 
- NUMBER OF WARNING MESSAGES ENCOUNTERED=          7
- NUMBER OF ERROR   MESSAGES ENCOUNTERED=          0
-
-+--------- D I S T R I B U T E D   A N S Y S   S T A T I S T I C S ------------+
-
-Release: 2021 R2            Build: 21.2       Update: UP20210601   Platform: WINDOWS x64 
-Date Run: 04/11/2023   Time: 20:59     Process ID: 31096
-Operating System: Windows 10  (Build: 22621)
-
-Processor Model: 12th Gen Intel(R) Core(TM) i7-12700H
-
-Compiler: Intel(R) FORTRAN Compiler Version 19.0.0  (Build: 20190206)
-          Intel(R) C/C++ Compiler Version 19.0.0  (Build: 20190206)
-          Intel(R) Math Kernel Library Version 2020.0.0 Product Build 20191125
-          BLAS Library supplied by Intel(R) MKL
-
-Number of machines requested            :    1
-Total number of cores available         :   20
-Number of physical cores available      :   14
-Number of processes requested           :    2
-Number of threads per process requested :    1
-Total number of cores requested         :    2 (Distributed Memory Parallel)               
-MPI Type: MSMPI   
-MPI Version: Microsoft MPI 10.1.12498.18
-
-GPU Acceleration: Not Requested
-
-Job Name: basic_beam0
-Input File: .__tmp__.inp
-
-  Core                Machine Name   Working Directory
- -----------------------------------------------------
-     0                      EZBook   c:\Users\eoinl\ThesisCode\Thesis\APDL
-     1                      EZBook   c:\Users\eoinl\ThesisCode\Thesis\APDL
- 
-Latency time from master to core     1 =    0.687 microseconds
- 
-Communication speed from master to core     1 =  9978.42 MB/sec
-
-Total CPU time for main thread                    :        0.0 seconds
-Total CPU time summed for all threads             :        2.1 seconds
-
-Elapsed time spent obtaining a license            :        1.4 seconds
-Elapsed time spent pre-processing model (/PREP7)  :    39651.7 seconds
-Elapsed time spent solution - preprocessing       :        0.0 seconds
-Elapsed time spent computing solution             :        0.0 seconds
-Elapsed time spent solution - postprocessing      :        0.0 seconds
-Elapsed time spent post-processing model (/POST1) :        0.0 seconds
-Elapsed time spent post-processing model (/POST26):        0.0 seconds
- 
-
-Maximum total memory used                         :        8.0 MB
-Maximum total memory allocated                    :     3136.0 MB
-Total physical memory available                   :         16 GB
-
-Total amount of I/O written to disk               :        0.0 GB
-Total amount of I/O read from disk                :        0.0 GB
-
-+------ E N D   D I S T R I B U T E D   A N S Y S   S T A T I S T I C S -------+
-
-
- *---------------------------------------------------------------------------*
- |                                                                           |
- |                       DISTRIBUTED ANSYS RUN COMPLETED                     |
- |                                                                           |
- |---------------------------------------------------------------------------|
- |                                                                           |
- | Ansys 2021 R2               Build 21.2         UP20210601     WINDOWS x64 |
- |                                                                           |
- |---------------------------------------------------------------------------|
- |                                                                           |
- | Database Requested(-db)  1024 MB    Scratch Memory Requested      1024 MB |
- | Maximum Database Used       1 MB    Maximum Scratch Memory Used      2 MB |
- |                                                                           |
- |---------------------------------------------------------------------------|
- |                                                                           |
- |        CP Time      (sec) =          2.078       Time  =  20:59:26        |
- |        Elapsed Time (sec) =      39667.000       Date  =  04/11/2023      |
- |                                                                           |
- *---------------------------------------------------------------------------*
+ NUMBER OF WARNING MESSAGES ENCOUNTERED=         16
+ NUMBER OF ERROR   MESSAGES ENCOUNTERED=         22

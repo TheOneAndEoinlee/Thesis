@@ -1,0 +1,16 @@
+# Ignore video files
+*.avi
+*.mp4
+*.mov
+*.mkv
+
+# Ignore image files
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.svg
+
+# Ignore all files in the media directory
+/media/

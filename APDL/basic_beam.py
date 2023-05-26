@@ -23,29 +23,33 @@ def generate_flexure_keypoints(mapdl, flexure_length, reinforcement_length,theta
 def generate_flexure_lines(mapdl, keypoints):
     lines = [
         mapdl.l(keypoints[0], keypoints[1]),
-        mapdl.l(keypoints[1], keypoints[2]),
+        mapdl.larc(keypoints[1], keypoints[2], keypoints[3],1e-1),
         mapdl.l(keypoints[2], keypoints[3])
     ]
 
     return lines
 
-def mesh_flexure(mapdl, lines, beam_thickness, beam_depth, flexure_thickness):
+def mesh_flexure(mapdl, lines):
     # Create a rectangular area section for the reinforced beam
-    mapdl.sectype(1, "BEAM", "RECT", 1)
-    mapdl.secdata(beam_thickness, beam_depth,2,2)
+    
 
-    #mesh the reinforced beam
-    mapdl.lmesh(lines[1])
+    # Mesh the reinforced beam lines using section 1
 
+    mapdl.secnum(1)
+    for line in [lines[1]]:
+        mapdl.lesize(line, ndiv=5)
+        mapdl.lmesh(line)
 
-
+    # Switch to section 2
+    mapdl.secnum(2)
+    
     # Create a rectangular area section for the flexure
-    mapdl.sectype(2, "BEAM", "RECT", 1)
-    mapdl.secdata(flexure_thickness, beam_depth,2,2)
+    
 
-    #mesh the flexure
-    mapdl.lmesh(lines[0])
-    mapdl.lmesh(lines[2])
+    # Mesh the flexure lines using section 2
+    for line in [lines[0], lines[2]]:
+        mapdl.lesize(line, ndiv=20)
+        mapdl.lmesh(line)
 
 
 def main():
@@ -66,6 +70,11 @@ def main():
     mapdl.et(1, "BEAM188")
     mapdl.mp("EX", 1, 200e9)  # Young's modulus
     mapdl.mp("PRXY", 1, 0.3)  # Poisson's ratio
+    mapdl.sectype(1, "BEAM", "RECT", 1)
+    mapdl.secdata(beam_thickness, beam_depth, 2, 2)
+
+    mapdl.sectype(2, "BEAM", "RECT", 1)
+    mapdl.secdata(flexure_thickness, beam_depth, 2, 2)
 
     # Define keypoints and create a line between them
     link1 = generate_flexure_keypoints(mapdl, flexure_length, beam_length, np.pi/8)
@@ -87,12 +96,12 @@ def main():
 
     
 
-    # mapdl.eplot(
-    # background="black",
-    # show_bounds=True,
-    # font_size=26,
-    # show_element_numbering=True,
-    # )
+    mapdl.eplot(
+    background="black",
+    show_bounds=True,
+    font_size=26,
+    color="white",
+    )
 
     
     # Exit the MAPDL session

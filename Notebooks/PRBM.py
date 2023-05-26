@@ -27,6 +27,9 @@ PE = 8*PE1+8*PE2+2*PE3
 c = sm.cos
 s = sm.sin
 
+F1 = PE1.diff(d1)
+F2 = PE2.diff(d1)
+F3 = PE3.diff(d1)
 F = PE.diff(d1)
 xs = [0,L1*c(th),2*L1*c(th),2*l1+h2,2*L1*c(th),2*l1+h2]
 ys = [0,h1-d1,0,l2+d3,0,-l2-d3]
@@ -36,6 +39,10 @@ dF = F.diff(d1)
 
 #convert F and PE to numpy functions with the parameters as input
 F_l = sm.lambdify([l1,l2,h1,h2,k_theta,k_phi,k_L,d1],F)
+F1_l = sm.lambdify([l1,l2,h1,h2,k_theta,k_phi,k_L,d1],F1)
+F2_l = sm.lambdify([l1,l2,h1,h2,k_theta,k_phi,k_L,d1],F2)
+F3_l = sm.lambdify([l1,l2,h1,h2,k_theta,k_phi,k_L,d1],F3)
+
 PE_l = sm.lambdify([l1,l2,h1,h2,k_theta,k_phi,k_L,d1],PE)
 PE1_l = sm.lambdify([l1,l2,h1,h2,k_theta,k_phi,k_L,d1],PE1)
 PE2_l = sm.lambdify([l1,l2,h1,h2,k_theta,k_phi,k_L,d1],PE2)
@@ -61,6 +68,10 @@ def evaluate(l1=10,l2=0.4,h1=4,h2=0.8,k_theta=1,k_phi=1,k_L=1,d1 =0):
 
     # TODO remove hard coded parameter multiplication for PE1, PE2, PE3
     Fl = F_l(l1,l2,h1,h2,k_theta,k_phi,k_L,d1)
+    F1l = 8*F1_l(l1,l2,h1,h2,k_theta,k_phi,k_L,d1)
+    F2l = 8*F2_l(l1,l2,h1,h2,k_theta,k_phi,k_L,d1)
+    F3l = 2*F3_l(l1,l2,h1,h2,k_theta,k_phi,k_L,d1)
+
     PEl = PE_l(l1,l2,h1,h2,k_theta,k_phi,k_L,d1)
     PE1l = 8*PE1_l(l1,l2,h1,h2,k_theta,k_phi,k_L,d1)
     PE2l = 8*PE2_l(l1,l2,h1,h2,k_theta,k_phi,k_L,d1)
@@ -69,7 +80,7 @@ def evaluate(l1=10,l2=0.4,h1=4,h2=0.8,k_theta=1,k_phi=1,k_L=1,d1 =0):
     ys = ys_l(l1,l2,h1,h2,k_theta,k_phi,k_L,d1)
     dF = dF_l(l1,l2,h1,h2,k_theta,k_phi,k_L,d1)
 
-    return {'F':Fl,'PE':PEl,'PE1':PE1l,'PE2':PE2l,'PE3':PE3l,'x':xs,'y':ys,'dF':dF}
+    return {'F':Fl,'PE':PEl,'PE1':PE1l,'PE2':PE2l,'PE3':PE3l,'x':xs,'y':ys,'dF':dF,'F1':F1l,'F2':F2l,'F3':F3l}
 
 
 
