@@ -1,0 +1,142 @@
+finish
+/clear, start
+/cwd, 'C:\Users\eoinl\ThesisCode\Thesis\APDL\Mechanism'
+/filname, bistable_mechanism
+nsteps = 10 !number of steps in sweep
+!define vectors for sweeps
+!Bl1
+*dim, BL1_vec, array, nsteps
+*vfill, BL1_vec,ramp,4.5e-3, 0 !constant as no increment
+!beta13
+*dim, beta13_vec, array, nsteps
+*vfill, beta13_vec,ramp,3, 0
+!beta2
+*dim, beta2_vec, array, nsteps
+*vfill, beta2_vec,ramp,15,0 
+!BL2
+*dim, BL2_vec, array, nsteps
+*vfill, BL2_vec,ramp,15e-3,0
+!sl
+*dim, sl_vec, array, nsteps
+*vfill, sl_vec,ramp,5e-3,1e-3
+
+
+
+
+
+!copt 
+
+
+
+
+
+! define parameters
+w = 5e-3    !width of beam
+t1 = 0.4e-3   !thickness of thin flexure
+t2 = 2.5e-3   !thickness of reinforced beam on bistable element
+t3 = 2.5e-3   !thickness of reinforced beam on end-effector
+BL1 = 4e-3     !length of thin flexure
+BL2 = 10e-3    !length of reinforced beam on bistable element
+h = 5e-3     !flexure spacing
+sl = 5e-3     !support length
+st = 2e-3     !support thickness
+Lr1 = 35e-3           !length of reinforced beam on end-effector
+L1 = 4e-3           !length of thin flexure on end-effector
+beta1 = 0              !angle of thin flexure on bistable element
+beta2 = 15*3.1416/180  !angle of reinforced beam on bistable element
+beta3 = 0              !angle of second thin flexure on bistable element
+alpha = 20*3.1416/180  !angle of reinforced beam on end-effector
+
+/prep7
+et, 1, beam188
+keyopt, 1, 1, 1 ! Turn on large deflection
+MP, EX, 1, 2.2E9  ! Young's modulus for material ID 1
+MP, PRXY, 1, 0.3  ! Poisson's ratio for material ID 1
+mptemp, 1, 0
+
+
+MP, EX, 2, 200E12  ! Young's modulus for material ID 2
+MP, PRXY, 2, 0.3  ! Poisson's ratio for material ID 2
+
+
+! Loop over BL1 values and run analysis
+*do, i, 1, nsteps
+! Assign BL1 value
+BL1 = BL1_vec(i)
+! Assign beta13 value
+beta1 = beta13_vec(i)*3.1416/180
+beta3 = beta13_vec(i)*3.1416/180
+! Assign beta2 value
+beta2 = beta2_vec(i)*3.1416/180
+! Assign BL2 value
+BL2 = BL2_vec(i)
+! Assign sl value
+sl = sl_vec(i)
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!geometry setup  !!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/input, bistable_setup, inp
+
+
+allsel
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!! loads !!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+/solu
+
+antype, 0
+nlgeom, on
+eqslv, sparse
+outres, all, all
+autots, on
+neqit, 30
+deltim, 1e-3, 1e-5, 1e-2, on
+
+!define bcs
+cmsel,s,id_fixed_nodes
+d,all, all
+allsel
+
+
+d,id_disp,uy,2.1*((BL1)*sin(beta1)+BL2*sin(beta2)+BL1*sin(beta3))
+
+allsel
+
+solve
+*get, n_steps1, active, 0, solu, ncmss
+!! DISPLAY DEFORMED STATE !!
+
+
+/post1
+/view, 1, 0, 0, 1
+subset, last
+pldisp, 1
+
+
+!!Render and save animation
+antime,20,0.05
+/anfile,save,results%i%,avi
+
+
+!plotting final force displacement curve
+/post26
+nsol, 2, id_disp, u, y, displacement
+rforce, 3, id_disp, F, y, force 
+xvar, 2
+plvar, 3
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!  save plot .txt file !!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+/input, scratch, gui
+
+
+*enddo

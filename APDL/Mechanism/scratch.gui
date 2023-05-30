@@ -1,0 +1,11 @@
+*del, var_export
+	*dim, var_export, table, n_steps1,3
+	vget, var_export(1,0), 1
+	vget, var_export(1,1), 2
+	vget, var_export(1,2), 3
+/output, 'result%i%','txt'
+    *vwrite,w, t1, t2, t3, BL1, BL2, h, sl, st, Lr1, L1, beta1, beta2, beta3, alpha
+    %g, %g, %g,%g, %g, %g,%g, %g, %g,%g, %g, %g,%g, %g, %g
+	*vwrite, var_export(1,0), var_export(1,1), var_export(1,2)
+	%g, %g, %g
+/output, term
