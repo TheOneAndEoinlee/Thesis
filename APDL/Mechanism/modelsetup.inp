@@ -39,6 +39,10 @@ sectype, 4, beam, rect,
 secdata, st, w, 2, 2
 secoffset, user, 0, 0
 
+!support beam section
+sectype, 5, beam, rect,
+secdata, 1e-3, w, 2, 2
+secoffset, user, 0, 0
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -228,11 +232,12 @@ allsel
 
 
 mat, 2
-secnum, 2
+secnum, 5
 lsel,s,line,,Line_ID1+1,Line_ID2
 lesize,all,0, , ,3
 lmesh,all
 allsel
+
 
 lsel,s,line,,Line_ID5+1,Line_ID6
 lesize,all,0, , ,3

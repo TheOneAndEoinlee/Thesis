@@ -2,23 +2,54 @@ finish
 /clear, start
 /cwd, 'C:\Users\eoinl\ThesisCode\Thesis\APDL\Mechanism'
 /filname, bistable_mechanism
-nsteps = 10 !number of steps in sweep
+nsteps = 1 !number of steps in sweep
+
+
+! define parameters
+w = 5e-3    !width of beam
+t1 = 0.4e-3   !thickness of thin flexure
+t2 = 2.5e-3   !thickness of reinforced beam on bistable element
+t3 = 2.5e-3   !thickness of reinforced beam on end-effector
+BL1 = 4e-3     !length of thin flexure
+BL2 = 24e-3    !length of reinforced beam on bistable element
+h = 5e-3     !flexure spacing
+sl = 6e-3     !support length
+st = 2e-3     !support thickness
+beta1 = 0              !angle of thin flexure on bistable element
+beta2 = 8              !angle of reinforced beam on bistable element
+beta3 = 0              !angle of second thin flexure on bistable element
+youngs = 2.2E9
+
+! ! chen parameters
+! w = 6e-3    !width of beam
+! t1 = 0.8e-3   !thickness of thin flexure
+! t2 = 3e-3   !thickness of reinforced beam on bistable element
+! BL1 = 8e-3     !length of thin flexure
+! BL2 = 20e-3    !length of reinforced beam on bistable element
+! h = 5e-3     !flexure spacing
+! sl = 1e-3     !support length
+! st = 2e-3     !support thickness
+! beta1 = 0              !angle of thin flexure on bistable element
+! beta2 = 12              !angle of reinforced beam on bistable element
+! beta3 = 0              !angle of second thin flexure on bistable element
+! youngs = 1.4E9
+
 !define vectors for sweeps
 !Bl1
 *dim, BL1_vec, array, nsteps
-*vfill, BL1_vec,ramp,4.5e-3, 0 !constant as no increment
+*vfill, BL1_vec,ramp,BL1, 0 !constant as no increment
 !beta13
 *dim, beta13_vec, array, nsteps
-*vfill, beta13_vec,ramp,3, 0
+*vfill, beta13_vec,ramp,beta1, 0
 !beta2
 *dim, beta2_vec, array, nsteps
-*vfill, beta2_vec,ramp,15,0 
+*vfill, beta2_vec,ramp,beta2,0 
 !BL2
 *dim, BL2_vec, array, nsteps
-*vfill, BL2_vec,ramp,15e-3,0
+*vfill, BL2_vec,ramp,BL2,0
 !sl
 *dim, sl_vec, array, nsteps
-*vfill, sl_vec,ramp,5e-3,1e-3
+*vfill, sl_vec,ramp,sl,0
 
 
 
@@ -30,27 +61,12 @@ nsteps = 10 !number of steps in sweep
 
 
 
-! define parameters
-w = 5e-3    !width of beam
-t1 = 0.4e-3   !thickness of thin flexure
-t2 = 2.5e-3   !thickness of reinforced beam on bistable element
-t3 = 2.5e-3   !thickness of reinforced beam on end-effector
-BL1 = 4e-3     !length of thin flexure
-BL2 = 10e-3    !length of reinforced beam on bistable element
-h = 5e-3     !flexure spacing
-sl = 5e-3     !support length
-st = 2e-3     !support thickness
-Lr1 = 35e-3           !length of reinforced beam on end-effector
-L1 = 4e-3           !length of thin flexure on end-effector
-beta1 = 0              !angle of thin flexure on bistable element
-beta2 = 15*3.1416/180  !angle of reinforced beam on bistable element
-beta3 = 0              !angle of second thin flexure on bistable element
-alpha = 20*3.1416/180  !angle of reinforced beam on end-effector
+
 
 /prep7
 et, 1, beam188
 keyopt, 1, 1, 1 ! Turn on large deflection
-MP, EX, 1, 2.2E9  ! Young's modulus for material ID 1
+MP, EX, 1, youngs  ! Young's modulus for material ID 1
 MP, PRXY, 1, 0.3  ! Poisson's ratio for material ID 1
 mptemp, 1, 0
 
@@ -102,11 +118,15 @@ cmsel,s,id_fixed_nodes
 d,all, all
 allsel
 
-
+time,1
 d,id_disp,uy,2.1*((BL1)*sin(beta1)+BL2*sin(beta2)+BL1*sin(beta3))
 
 allsel
 
+solve
+
+time,2 
+d,id_disp,uy,0
 solve
 *get, n_steps1, active, 0, solu, ncmss
 !! DISPLAY DEFORMED STATE !!
@@ -115,10 +135,10 @@ solve
 /post1
 /view, 1, 0, 0, 1
 subset, last
-pldisp, 1
+plnsol,s,eqv
 
 
-!!Render and save animation
+! !!Render and save animation
 antime,20,0.05
 /anfile,save,results%i%,avi
 
