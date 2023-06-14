@@ -1,0 +1,187 @@
+! Define the material properties
+
+!clear geometry if rebuilding
+/PREP7
+ALLSEL, ALL  ! Selects all entities
+CMDELE,id_fixed_nodes
+lclear, all  ! Clears all entities
+LDELE, ALL  ! Deletes all lines
+KDELE, ALL  ! Deletes all keypoints
+
+
+
+
+
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!
+!! define sections !!
+!!!!!!!!!!!!!!!!!!!!!
+
+
+!thin flexure
+sectype, 2, beam, rect,
+secdata, t1, w, 2, 2
+secoffset, user, 0, 0
+!reinforcement on bistable element
+sectype, 1, beam, rect,
+secdata, t2, w, 2, 2
+secoffset, user, 0, 0
+
+!reinforcement on end-effector
+sectype, 3, beam, rect,
+secdata, t3, w, 2, 2
+secoffset, user, 0, 0
+
+!support beam section
+sectype, 4, beam, rect,
+secdata, st, w, 2, 2
+secoffset, user, 0, 0
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! keypoints for geometry !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!bistable element
+
+
+!bistable shuttle
+k, 1, h/2, h/2, 0
+k, 2, h/2, -h/2, 0
+k, 3, -h/2, -h/2, 0
+k, 4, -h/2, h/2, 0
+k,100,0,-h/2,0
+
+!right side of bistable element
+!top right flexure
+k, 5, h/2+ BL1*cos(beta1), h/2 + BL1*sin(beta1), 0
+k, 6, h/2+ BL1*cos(beta1)+ BL2*cos(beta2), h/2 + BL1*sin(beta1)+ BL2*sin(beta2), 0
+k, 7, h/2+ BL1*cos(beta1)+ BL2*cos(beta2) + BL1*cos(beta3), h/2 + BL1*sin(beta1)+ BL2*sin(beta2)+ BL1*sin(beta3), 0 !fixed point
+
+!bottom right flexure
+k, 8, h/2+ BL1*cos(beta1), -h/2 + BL1*sin(beta1), 0
+k, 9, h/2+ BL1*cos(beta1)+ BL2*cos(beta2), -h/2 + BL1*sin(beta1)+ BL2*sin(beta2), 0
+k, 10, h/2+ BL1*cos(beta1)+ BL2*cos(beta2) + BL1*cos(beta3), -h/2 + BL1*sin(beta1)+ BL2*sin(beta2)+ BL1*sin(beta3), 0 !fixed point
+
+!left side of bistable element
+!top left flexure
+k, 11, -h/2- BL1*cos(beta1), h/2 + BL1*sin(beta1), 0
+k, 12, -h/2- BL1*cos(beta1)- BL2*cos(beta2), h/2 + BL1*sin(beta1)+ BL2*sin(beta2), 0
+k, 13, -h/2- BL1*cos(beta1)- BL2*cos(beta2) - BL1*cos(beta3), h/2 + BL1*sin(beta1)+ BL2*sin(beta2)+ BL1*sin(beta3), 0
+
+!bottom left flexure
+k, 14, -h/2- BL1*cos(beta1), -h/2 + BL1*sin(beta1), 0
+k, 15, -h/2- BL1*cos(beta1)- BL2*cos(beta2), -h/2 + BL1*sin(beta1)+ BL2*sin(beta2), 0
+k, 16, -h/2- BL1*cos(beta1)- BL2*cos(beta2) - BL1*cos(beta3), -h/2 + BL1*sin(beta1)+ BL2*sin(beta2)+ BL1*sin(beta3), 0
+
+
+!support 
+k, 34, -h/2- BL1*cos(beta1)- BL2*cos(beta2) - BL1*cos(beta3), h/2 + BL1*sin(beta1)+ BL2*sin(beta2)+ BL1*sin(beta3)+sl, 0 !fixed point
+k, 35, -h/2- BL1*cos(beta1)- BL2*cos(beta2) - BL1*cos(beta3), -h/2 + BL1*sin(beta1)+ BL2*sin(beta2)+ BL1*sin(beta3)-sl, 0   !fixed point
+
+
+*get, Line_ID1, line, 0, num, maxd ! start is # 0 
+
+l,1, 2
+l,2,100
+l,100,3
+l,3, 4
+l,4, 1
+
+
+*get, Line_ID2, line, 0, num, maxd !! #lines till this point is 6
+
+!bistable beam short flexures
+l, 1, 5!top right flexure
+l, 6, 7
+
+l, 8, 2!bottom right flexure
+l, 9, 10
+
+l, 4, 11!top left flexure
+l, 12, 13
+
+l, 14, 3!bottom left flexure
+l, 15, 16
+
+*get, Line_ID3, line, 0, num, maxd ! #lines till this point is 14
+
+!bistable beam reinforced beams
+l, 5, 6!top right flexure
+l, 8, 9!bottom right flexure
+l, 11, 12!top left flexure
+l, 14, 15!bottom left flexure
+!define right side of bistable element lines
+
+*get, Line_ID4, line, 0, num, maxd ! #lines till this point is 18
+
+!define support
+l,  13,16
+l,  13,34
+l,  16,35
+
+*get, Line_ID5, line, 0, num, maxd ! #lines till this point is 21
+
+
+
+mat, 1 !set element type to beam188
+
+
+allsel
+!mesh flexures
+secnum, 2
+lsel, s, line, , Line_ID2+1, Line_ID3
+lesize, all, 0, , 10
+lmesh, all
+allsel
+
+!mesh reinforced beams
+secnum, 1
+lsel, s, line, , Line_ID3+1, Line_ID4
+lesize, all,0 , , ,5
+lmesh, all
+allsel
+
+!mesh support
+secnum, 4
+lsel, s, line, , Line_ID4+1, Line_ID5
+lesize, all,0 , , ,10
+lmesh, all
+allsel
+
+
+mat, 2
+secnum, 2
+lsel,s,line,,Line_ID1+1,Line_ID2
+lesize,all,0, , ,3
+lmesh,all
+allsel
+
+
+!define boundary conditions
+
+/eshape, 1
+/view, 1, 1, 1, 1
+eplot
+
+!select nodes to be fixed 
+ksel,s,,,7
+ksel,a,,,10
+ksel,a,,,34
+ksel,a,,,35
+nslk,s
+cm,id_fixed_nodes,node
+allsel
+
+!select nodes to be input displacement
+ksel,s,,,100
+nslk,s
+*get, id_disp, node, , num, min
+allsel
+
+
+/eof 

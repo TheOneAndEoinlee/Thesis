@@ -1,0 +1,136 @@
+MESHLINE
+
+kp1 = arg2+arg1
+kp2 = arg3+arg1
+material = arg4
+section = arg5
+numelem = arg6
+typeelem = arg7
+!arg6 is koffset
+
+
+l,kp1,kp2
+*get,lID,line,0,num,maxd
+
+allsel
+type,typeelem
+secnum, section
+mat, material
+lsel,s,line,,lID
+lesize,all,0,,numelem
+lmesh,all
+/eof
+
+unitcellkp
+kpo = arg1
+z = arg2
+
+csys,0
+!define local coordinate system at centre of end effector
+clocal,13,0,0,0,z
+!bistable shuttle
+k,kpo+ 1, h/2, h/2, 0
+k,kpo+ 2, h/2, -h/2, 0
+k,kpo+ 3, -h/2, -h/2, 0
+k,kpo+ 4, -h/2, h/2, 0
+
+!right side of bistable element
+!top right flexure
+k,kpo+ 5, h/2+ BL1*cos(beta1), h/2 + BL1*sin(beta1), 0
+k,kpo+ 6, h/2+ BL1*cos(beta1)+ BL2*cos(beta2), h/2 + BL1*sin(beta1)+ BL2*sin(beta2), 0
+k,kpo+ 7, h/2+ BL1*cos(beta1)+ BL2*cos(beta2) + BL1*cos(beta3), h/2 + BL1*sin(beta1)+ BL2*sin(beta2)+ BL1*sin(beta3), 0 !fixed point
+
+!bottom right flexure
+k,kpo+ 8, h/2+ BL1*cos(beta1), -h/2 + BL1*sin(beta1), 0
+k,kpo+ 9, h/2+ BL1*cos(beta1)+ BL2*cos(beta2), -h/2 + BL1*sin(beta1)+ BL2*sin(beta2), 0
+k,kpo+ 10, h/2+ BL1*cos(beta1)+ BL2*cos(beta2) + BL1*cos(beta3), -h/2 + BL1*sin(beta1)+ BL2*sin(beta2)+ BL1*sin(beta3), 0 !fixed point
+
+!left side of bistable element
+!top left flexure
+k,kpo+ 11, -h/2- BL1*cos(beta1), h/2 + BL1*sin(beta1), 0
+k,kpo+ 12, -h/2- BL1*cos(beta1)- BL2*cos(beta2), h/2 + BL1*sin(beta1)+ BL2*sin(beta2), 0
+k,kpo+ 13, -h/2- BL1*cos(beta1)- BL2*cos(beta2) - BL1*cos(beta3), h/2 + BL1*sin(beta1)+ BL2*sin(beta2)+ BL1*sin(beta3), 0
+
+!bottom left flexure
+k,kpo+ 14, -h/2- BL1*cos(beta1), -h/2 + BL1*sin(beta1), 0
+k,kpo+ 15, -h/2- BL1*cos(beta1)- BL2*cos(beta2), -h/2 + BL1*sin(beta1)+ BL2*sin(beta2), 0
+k,kpo+ 16, -h/2- BL1*cos(beta1)- BL2*cos(beta2) - BL1*cos(beta3), -h/2 + BL1*sin(beta1)+ BL2*sin(beta2)+ BL1*sin(beta3), 0
+
+!end-effector
+!define local coordinate system at centre of end effector
+clocal, 11, 0,-(Lr1+2*L1)*sin(alpha), -h*1.5-(Lr1+2*L1)*cos(alpha), 0 
+k,kpo+ 17, h*0.4, 0, 0 
+k,kpo+ 18, h*0.4,h,0
+k,kpo+ 19, -h*0.4, h, 0
+k,kpo+ 20, -h*0.4, -h, 0
+k,kpo+ 21, h*0.4, -h, 0 !input keypoint
+
+!top right flexure
+k,kpo+ 22, h*0.4+ L1*sin(alpha), h + L1*cos(alpha), 0
+k,kpo+ 23, h*0.4+ L1*sin(alpha)+ Lr1*sin(alpha), h + L1*cos(alpha)+ Lr1*cos(alpha), 0
+k,kpo+ 24, h*0.4+ L1*sin(alpha)+ Lr1*sin(alpha)+ L1*sin(alpha), h + L1*cos(alpha)+ Lr1*cos(alpha)+ L1*cos(alpha), 0 
+
+!top left flexure
+k,kpo+ 25, -h*0.4+ L1*sin(alpha), h + L1*cos(alpha), 0
+k,kpo+ 26, -h*0.4+ L1*sin(alpha)+ Lr1*sin(alpha), h + L1*cos(alpha)+ Lr1*cos(alpha), 0
+k,kpo+ 27, -h*0.4+ L1*sin(alpha)+ Lr1*sin(alpha)+ L1*sin(alpha), h + L1*cos(alpha)+ Lr1*cos(alpha)+ L1*cos(alpha), 0
+
+!bottom right flexure
+k,kpo+ 28, h*0.4+ L1*sin(alpha), -h - L1*cos(alpha), 0
+k,kpo+ 29, h*0.4+ L1*sin(alpha)+ Lr1*sin(alpha), -h - L1*cos(alpha)- Lr1*cos(alpha), 0
+k,kpo+ 30, h*0.4+ L1*sin(alpha)+ Lr1*sin(alpha)+ L1*sin(alpha), -h - L1*cos(alpha)- Lr1*cos(alpha)- L1*cos(alpha), 0 !fixed point
+
+!bottom left flexure
+k,kpo+ 31, -h*0.4+ L1*sin(alpha), -h - L1*cos(alpha), 0
+k,kpo+ 32, -h*0.4+ L1*sin(alpha)+ Lr1*sin(alpha), -h - L1*cos(alpha)- Lr1*cos(alpha), 0
+k,kpo+ 33, -h*0.4+ L1*sin(alpha)+ Lr1*sin(alpha)+ L1*sin(alpha), -h - L1*cos(alpha)- Lr1*cos(alpha)- L1*cos(alpha), 0 !fixed point
+
+!support 
+csys,13
+k,kpo+ 34, -h/2- BL1*cos(beta1)- BL2*cos(beta2) - BL1*cos(beta3), h/2 + BL1*sin(beta1)+ BL2*sin(beta2)+ BL1*sin(beta3)+sl, 0 !fixed point
+k,kpo+ 35, -h/2- BL1*cos(beta1)- BL2*cos(beta2) - BL1*cos(beta3), -h/2 + BL1*sin(beta1)+ BL2*sin(beta2)+ BL1*sin(beta3)-sl, 0   !fixed point
+
+!bifurcation element
+csys,11
+clocal,12,0,bxoffset,0,0
+
+k,kpo+ 36, 0,0,0 
+k,kpo+ 37, h,0,0
+k,kpo+ 38, 0,h,uc
+k,kpo+ 39, 0,-h,-uc
+
+!Flexures
+
+k,kpo+ 40, 0,L2,0!upper left
+k,kpo+ 41, 0+Lc2*sin(alpha2),L2+Lc2*cos(alpha2),0
+k,kpo+ 42, 0+Lr2*sin(alpha2),L2+Lr2*cos(alpha2),0
+k,kpo+ 43, 0+Lr2*sin(alpha2),2*L2+Lr2*cos(alpha2),0 !fixed point
+k,kpo+ 44, h,L2,0!upper right
+k,kpo+ 45, h+Lr2*sin(alpha2),L2+Lr2*cos(alpha2),0
+k,kpo+ 46, h+Lr2*sin(alpha2),2*L2+Lr2*cos(alpha2),0 !fixed point
+k,kpo+ 47, 0,-L2,0!lower left
+k,kpo+ 48, 0+Lr2*sin(alpha2),-L2-Lr2*cos(alpha2),0
+k,kpo+ 49, 0+Lr2*sin(alpha2),-2*L2-Lr2*cos(alpha2),0 !input keypoint
+k,kpo+ 50, h,-L2,0!lower right
+k,kpo+ 51, h+Lr2*sin(alpha2),-L2-Lr2*cos(alpha2),0
+k,kpo+ 52, h+Lr2*sin(alpha2),-2*L2-Lr2*cos(alpha2),0 !input keypoint
+
+/eof
+
+!line connectivity
+! 36,37,2,5,3
+! 36,38,2,5,3
+! 36,39,2,5,3
+! 36,40,1,2,10
+! 40,41,1,4,5
+! 41,42,1,4,5
+! 42,43,1,2,10
+! 37,44,1,2,10
+! 44,45,1,4,5
+! 45,46,1,2,10
+! 36,47,1,2,10
+! 47,48,1,4,5
+! 48,49,1,2,10
+! 37,50,1,2,10
+! 50,51,1,4,5
+! 51,52,1,2,10
