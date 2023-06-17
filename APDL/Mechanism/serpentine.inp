@@ -1,0 +1,137 @@
+finish
+/clear, start
+/cwd, 'C:\Users\eoinl\ThesisCode\Thesis\APDL\Mechanism'
+
+numseg = 18 !number of serpentine segments
+w = 5e-3 !width of serpentine
+t = 0.5e-3 !thickness of serpentine segments
+tc = 1e-3 !thickness of serpentine segments
+flexlength = 10.06e-3 !amplitude of serpentine
+conlength = 1e-3 !length of connector between serpentine segments
+
+! Loooping logic
+! nsteps = 2
+! *dim,flexlength_vec,array,nsteps
+! ! *vfill,flexlength_vec,ramp,flexlength,0.5e-3
+! flexlength_vec(1) = 6.4e-3
+! flexlength_vec(2) = 6.4e-3
+
+! *do,k,1,nsteps
+! flexlength = flexlength_vec(k)
+
+! /prep7
+! ALLSEL, ALL  ! Selects all entities
+! CMDELE,id_fixed_nodes
+! lclear, all  ! Clears all entities
+! LDELE, ALL  ! Deletes all lines
+! KDELE, ALL  ! Deletes all keypoints
+
+
+
+
+!define material and element type
+/prep7
+et,1,beam188
+keyopt,1,1,1
+
+MP, EX, 1, 2.2e9 !Young's modulus
+MP, PRXY, 1, 0.3 !Poisson's ratio
+mptemp,1,0 !temperature
+
+sectype,1,beam,rect
+secdata,t,w
+sectype,2,beam,rect
+secdata,tc,w
+
+!define geometry
+
+k,0,0,0,0
+
+
+! *do,i,1,numseg,
+!     k,0,2*i*conlength,-flexlength/2,0
+!     k,0,(2*i+1)*conlength,-flexlength/2,0
+!     k,0,(2*i+1)*conlength,flexlength/2,0	
+!     k,0,(2*i+2)*conlength,flexlength/2,0
+! *enddo
+! k,0,(2*numseg+2)*conlength,0,0
+
+*do, i,1,numseg
+    k,0,i*conlength,0,0
+    k,0,i*conlength,flexlength,0
+*enddo
+k,0,(numseg+1)*conlength,0,0
+*get,input_kp,kp,0,num,maxd
+
+l,1,2
+toggle = 0.5
+*do,i,1,numseg
+    l,2*i,2*i+1
+    l,2*i+0.5+toggle,2*i+2.5+toggle
+    toggle = -toggle
+*enddo
+
+
+lsel,s,length,,flexlength
+secnum,1
+lesize,all,0,,10
+lmesh,all
+allsel
+
+lsel,s,length,,conlength
+secnum,2
+lesize,all,0,,3
+lmesh,all
+allsel
+
+
+
+/eshape, 1
+/view, 1, 1, 1, 1
+eplot
+
+/solu
+antype, 0
+nlgeom, on
+eqslv, sparse
+outres, all, all
+autots, on
+neqit, 50
+deltim, 1e-3, 1e-6, 1e-2, on
+
+!define boundary conditions
+dk,1,all,0
+dk,input_kp,all,0
+dk,input_kp,ux,30e-3
+solve
+*get, n_steps1, active, 0, solu, ncmss
+
+
+
+/post26
+!get maximum node number
+ksel,s,kp,,input_kp
+nslk,s
+*get,id_disp,node,,num,max
+allsel
+nsol, 2, id_disp, u, x, displacement
+rforce, 3, id_disp, F, x, force 
+xvar, 2
+plvar, 3
+
+
+*del, var_export
+	*dim, var_export, table, n_steps1,3
+	vget, var_export(1,0), 1
+	vget, var_export(1,1), 2
+	vget, var_export(1,2), 3
+/output, 'resulta','txt'
+    *vwrite,flexlength
+    %g
+	*vwrite, var_export(1,0), var_export(1,1), var_export(1,2)
+	%g, %g, %g
+/output, term
+
+
+! *enddo
+

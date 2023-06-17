@@ -114,8 +114,52 @@ k,kpo+ 49, 0+Lr2*sin(alpha2),-2*L2-Lr2*cos(alpha2),0 !input keypoint
 k,kpo+ 50, h,-L2,0!lower right
 k,kpo+ 51, h+Lr2*sin(alpha2),-L2-Lr2*cos(alpha2),0
 k,kpo+ 52, h+Lr2*sin(alpha2),-2*L2-Lr2*cos(alpha2),0 !input keypoint
+/eof
+
+!springs connectinvity
+! 17,36,3,6,10,2
+! 21,91,3,6,10,2
+! 18,-14,3,6,10,2
+
+serpentineSpring
+arg1 = numseg
+arg2 = sec1
+arg3 = sec2
+arg4 = flexlength
+arg5 = conlength
+
+k,0,0,0,0
+!get highest keypoint number
+*get,kpoffset,kp,0,num,maxd
+
+*do, i,1,numseg
+    k,0,i*conlength,0,0
+    k,0,i*conlength,flexlength,0
+*enddo
+k,0,(numseg+1)*conlength,0,0
+
+l,koffset,kpoffset+1
+toggle = 0.5
+*do,i,1,numseg
+    l,kpoffset+2*i,kpoffset+2*i+1
+    l,kpoffset+2*i+0.5+toggle,kpoffset+2*i+1.5+toggle
+    toggle = -toggle
+*enddo
+
+lsel,s,length,,flexlength
+secnum,sec
+lesize,all,0,,10
+lmesh,all
+
+lsel,s,length,,conlength
+secnum,2
+lesize,all,0,,3
+lmesh,all
+
 
 /eof
+
+
 
 !line connectivity
 ! 36,37,2,5,3
