@@ -1,12 +1,12 @@
 finish
 /clear, start
-/cwd, 'C:\Users\eoinl\ThesisCode\Thesis\APDL\Mechanism\21623serpentinetest1'
+/cwd, 'C:\Users\eoinl\ThesisCode\Thesis\APDL\Mechanism'
 *ulib,macros,mac
-N=38 !number of lines in connectivity file
+N=67 !number of lines in connectivity file
 
 *DIM, con, ARRAY, N, 6   ! Define array of size Nx5 (N total lines, 5 columns)
 
-*VREAD, con(1,1), connectivity, txt, ,jik, 6, N, , 1 ! Read txt data into array, skipping the header line
+*VREAD, con(1,1), connectivitysignal, txt, ,jik, 6, N, , 1 ! Read txt data into array, skipping the header line
 (6F10.0)
 
 ! define parameters
@@ -23,47 +23,61 @@ sl = 6e-3       !support length
 st = 2e-3       !support thickness
 Lr1 = 35e-3     !length of reinforced beam on end-effector
 L1 = 6e-3       !length of thin flexure on end-effector
-Lr2 = 55e-3     !length of reinforced beam on end-effector
-Lc2 = 45e-3     !position of coupling point to bifurcation elemenet to decision element
+Lr2 = 80e-3     !length of reinforced beam on end-effector
+Lc2 = 70e-3     !position of coupling point to bifurcation elemenet to decision element
 L2 = 6e-3       !length of bifurcation flexure
+L3 = 25e-3      !length of bifurcation input linear guide flexure
+
 
 !parameters for serpentine spring elements
 ts1 = 0.5e-3    !thickness of serpentine spring 1
-ts2 = 0.8e-3    !thickness of serpentine spring 2
+ts2 = 0.8e-3    !thickness of serpentine spring 2  !!change back!!!
 ls1 = 10.1e-3      !length of serpentine spring 1
 ls2 = 14.6e-3      !length of serpentine spring 2
 n1 = 18         !number of serpentine springs 1
 n2 = 14         !number of serpentine springs 2
-tc = 1e-3     !thickness of connecting segments
+tc = 1e-3     !thickness of connecting segments !change back!!!
 lc = 1e-3       !length of connecting segments
 
 !parameter for thin spring
-ts = 0.1e-3     !thickness of thin spring
+ts = 0.2e-3     !thickness of thin spring
 
+!parameters for signal routing element
+SL1 = 4e-3       !length of signal routing element thin flexure
+SL2 = 10e-3      !length of signal routing element reinforced beam
+SL3 = 15e-3       !length of signal routing element parallel thin flexure
+SL4 = 15e-3       !length of signal routing element parallel reinforced beam
+Ncon = 6          !number of spring legs on signal routing element
+Lcon = 9e-3       !length of spring legs on signal routing element
+Lccon = 3e-3      !length of connecting segments on signal routing element
+tccon = 0.4e-3      !thickness of connecting segments on signal routing element
+
+bxoffset = 80e-3 !x offset of bifurcation element
+uc = 2*w !unit cell spacing
+Ncells = 1 ! number of unit cells
+
+disp_in = 10e-3 !displacement of input node
+
+
+!define angles
 beta1 = 0       !angle of thin flexure on bistable element
 beta2 = 8       !angle of reinforced beam on bistable element
 beta3 = 0       !angle of second thin flexure on bistable element
 alpha = 22      !angle of reinforced beam on end-effector
 alpha2 = 2       !angle of bifurcation element
-
-bxoffset = 60e-3 !x offset of bifurcation element
-uc = 2*w !unit cell spacing
-Ncells = 1 ! number of unit cells
-
-disp_in = 30e-3 !displacement of input node
+theta = 30      !angle of signal routing element
 !convert angles to radians
 beta1 = beta1*pi/180
 beta2 = beta2*pi/180
 beta3 = beta3*pi/180
 alpha = alpha*pi/180
 alpha2 = alpha2*pi/180
+theta = theta*pi/180
 
 !spring calculation
 dist = (Lr1+2*L1)*sin(alpha)
-springlength = 3*dist-h/2
-springarea = 1e-6
-springk = 120
-springe = springk*springlength/springarea
+
+
 
 !!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!! Define Materials!!
@@ -84,8 +98,8 @@ mptemp, 1, 0
 !material for rigid bodies
 MP, EX, 2, 200E12  ! Young's modulus for material ID 2
 MP, PRXY, 2, 0.3  ! Poisson's ratio for material ID 2
+!change element to rigid link MPC
 
-MP, EX, 3, springe  ! Young's modulus for material ID 3
 
 
 !reinforcement on bistable element
@@ -122,7 +136,7 @@ kpo = 0
 z = 0
 
 *do,k,1,Ncells
-    /input,unitcellkp,inp
+    /input,unitcellkpsignal,inp
     
     *do,j,1,N
         !LOGIC TO CHECK THAT I DONT MESH SPRING ELEMENTS OUT OF RANGE
@@ -134,9 +148,21 @@ z = 0
 
 
     *get,kpo,kp,0,num,maxd !get number of keypoints up to this point
-    *if,k,eq,1,then
-        *get,kpnum,kp,0,num,maxd !get number of keypoints in unit cell
     z = z + uc !increment z position of unit cell
+
+
+    !meshing interconnects
+    ! *use, meshline,0,middlespring,middlebifurcation,1,9,10,1
+    *if, k,gt,1,then !dont try to mesh to previous unit cell if this is the first unit cell
+        *use ,meshline,0,topspring,topbifurcation_prev,1,9,20,1
+        *use,meshline,0,bottomspring_prev,bottombifurcation,1,9,20,1
+
+    *else
+        kpnum = kpo
+    *endif
+    
+    topbifurcation_prev = topbifurcation !save previous top bifurcation keypoint
+    bottomspring_prev = bottomspring     !save previous bottom spring keypoint
 
 *enddo
 
@@ -157,7 +183,7 @@ outres, all, all
 autots, on
 neqit, 50
 deltim, 1e-3, 1e-6, 1e-2, on
-arclen, on
+! arclen, on,100 !maybe change radius of arclength search
 
 !Set boundary conditions
 !select nodes to be constrained
@@ -167,59 +193,70 @@ ksel,a,kp,,30,kpo,kpnum
 ksel,a,kp,,33,kpo,kpnum
 ksel,a,kp,,34,kpo,kpnum
 ksel,a,kp,,35,kpo,kpnum
+ksel,a,kp,,43,kpo,kpnum
+ksel,a,kp,,46,kpo,kpnum
+ksel,a,kp,,55,kpo,kpnum
+ksel,a,kp,,56,kpo,kpnum
+ksel,a,kp,,61,kpo,kpnum
+ksel,a,kp,,63,kpo,kpnum
+
 nslk,s
 cm,fixed_nodes,node
 
 
+!select nodes to be input
+
+! bifurcation input
+ksel,s,kp,,49,kpo,kpnum
+nslk,s
+*get,bi_input_node,node,,num,min
+
+!end effector input
+ksel,s,kp,,17,kpo,kpnum
+nslk,s
+cm,input_nodes,node
+
+
+
+!get id of node at the connection point on the bifurcation 
+ksel,s,kp,,41,kpo,kpnum
+nslk,s
+*get,bi_con_node,node,,num,min
+
+!get id of node at the support 
+ksel,s,kp,,34
+nslk,s
+*get,support_node1,node,,num,min
+
+ksel,s,kp,,35
+nslk,s
+*get,support_node2,node,,num,min
 
 
 cmsel,s,fixed_nodes
 d,all,all
 allsel
 
-dk,topspring,all,all
-dk,topspring,ux,disp_in
-! solve
-
-
-
-! dk,middlespring,all,all
-! dk,middlespring,ux,disp_in
-
-! dk,bottomspring,all,all
-! dk,bottomspring,ux,disp_in
-
-
-! dk,bottomspring,all,all
-! dk,bottomspring,ux,disp_in
+disp_end = 32e-3
+!end effector input
+cmsel,s,input_nodes
+d,all,ux,disp_end
+d,all,rotz,0
+allsel
 solve
 
-*get, n_steps1, active, 0, solu, ncmss
-!! DISPLAY DEFORMED STATE !!
+time,1.1
+kbc,1
+deltim, 1e-1, 1e-6, 1e-1, on
+*get,y_disp,node,bi_input_node,u,y1
+d,bi_input_node,uy,y_disp
+solve
 
-
-/post1
-/view, 1, 0, 0, 1
-subset, last
-plnsol,s,eqv
-
-
-
-
-/post26
-
-ksel,s,kp,,topspring
-nslk,s
-*get, id_disp, node, 0, num, max
-allsel
-
-nsol, 2, id_disp, u, x, displacement
-rforce, 3, id_disp, F, x, force 
-xvar, 2
-plvar, 3
-
-
-! solve
+time,2
+kbc,0
+deltim, 1e-3, 1e-6, 1e-2, on
+d,bi_input_node,uy,disp_in
+solve
 
 ! time,2
 ! cmsel,s,connection_nodes
@@ -229,3 +266,47 @@ plvar, 3
 ! d,all,uy,disp_in
 ! allsel
 ! solve
+
+/post1
+/view, 1, 0, 0, 1
+subset, last
+plnsol,u,x
+
+
+!Render and save animation
+antime,50,0.05
+/anfile,save,resultsconnection2,avi
+
+
+/post26
+
+
+
+ksel,s,kp,,middlebifurcation
+nslk,s
+*GET,mbif_id,node,0,num,max
+
+! *get,mspringnode,node,0,num,max
+! allsel
+ksel,s,kp,,17
+nslk,s
+*get, id_disp, node, 0, num, max
+allsel
+nsol, 2, id_disp, u, x, displacement
+rforce, 3, id_disp, F, x, force 
+nsol,4, mbif_id, u, x, displacement
+nsol,5, bi_con_node, u, x, displacement
+xvar,1
+plvar,4
+
+
+! ksel,s,kp,,middlespring
+! nslk,s
+
+! *get,mspringnode,node,0,num,max
+! allsel
+
+! nsol,2,mspringnode,u,x,displacement
+! rforce,3,17,F,x,force
+! xvar,2
+! plvar,3

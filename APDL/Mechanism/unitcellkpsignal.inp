@@ -90,15 +90,40 @@ k,kpo+ 50, h,-L2,0!lower right
 k,kpo+ 51, h+Lr2*sin(alpha2),-L2-Lr2*cos(alpha2),0
 k,kpo+ 52, h+Lr2*sin(alpha2),-2*L2-Lr2*cos(alpha2),0 !input keypoint
 
+*use,ckp,14,kpo+49
+
+!bifurcation input block
+k,kpo+ 53, 0,-h,0 
+k,kpo+ 54, h,-h,0 
+!bifurcation linear guide springs
+k,kpo+ 55, -L3,0,0
+k,kpo+ 56, -L3,-h,0
+
+
 !signal routing mechanism 
 csys,13
-k,kpo+53, 0,h,0 !top centre of bistable shuttle
-k,kpo+54,0,h+L3,0 !top of signal spring
+k,kpo+57, 0,h/2,0 !top centre of bistable shuttle
+k,kpo+58,0,h/2+SL1,0 !top of signal spring
+*use,ckp,15,kpo+58
 
+!get y location of the node on the bifurcation element to line up with the signal spring
+*get,signaly,kp,kpo+41,loc,y
+signalx = signaly/tan(theta)
 
+k,kpo+59,signalx,signaly,0 !top of signal beam
+k,kpo+60,signalx+SL1,signaly,0 !end of second signal spring
 
+*use,ckp,15,kpo+60
 
+k,kpo+61,0,SL3,0 !top of signal router linear guide left spring
+k,kpo+62,SL4,0,0 !bottom of signal router linear guide right spring
+k,kpo+63,SL4,SL3,0 !top of signal router linear guide right spring
 
+*use,ckp,15,kpo+62
+*use, serpentineSpring, Ncon, 6, 8, Lcon, Lccon, kpo+62
+
+*get,signalrouter,kp,,num,max
+*use,meshline,0,signalrouter,kpo+41,1,2,1
 
 !use serpentine flexure to connect the bifurcation element to the end-effector
 csys,11

@@ -81,7 +81,17 @@ lesize,all,0,,numelem
 lmesh,all
 /eof
 
+ckp
+csysnum = arg1
+kpnum = arg2
 
+!get x, y and z coordinates of keypoint
+*get,x1,kp,kpnum,loc,x
+*get,y1,kp,kpnum,loc,y
+*get,z1,kp,kpnum,loc,z
+
+clocal,csysnum,0,x1,y1,z1
+/eof
 
 !springs connectinvity
 ! 17,36,3,6,10,2

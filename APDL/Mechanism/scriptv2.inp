@@ -23,47 +23,55 @@ sl = 6e-3       !support length
 st = 2e-3       !support thickness
 Lr1 = 35e-3     !length of reinforced beam on end-effector
 L1 = 6e-3       !length of thin flexure on end-effector
-Lr2 = 55e-3     !length of reinforced beam on end-effector
-Lc2 = 45e-3     !position of coupling point to bifurcation elemenet to decision element
+Lr2 = 80e-3     !length of reinforced beam on end-effector
+Lc2 = 70e-3     !position of coupling point to bifurcation elemenet to decision element
 L2 = 6e-3       !length of bifurcation flexure
+
 
 !parameters for serpentine spring elements
 ts1 = 0.5e-3    !thickness of serpentine spring 1
-ts2 = 0.8e-3    !thickness of serpentine spring 2
+ts2 = 0.8e-3    !thickness of serpentine spring 2  !!change back!!!
 ls1 = 10.1e-3      !length of serpentine spring 1
 ls2 = 14.6e-3      !length of serpentine spring 2
 n1 = 18         !number of serpentine springs 1
 n2 = 14         !number of serpentine springs 2
-tc = 1e-3     !thickness of connecting segments
+tc = 1e-3     !thickness of connecting segments !change back!!!
 lc = 1e-3       !length of connecting segments
 
 !parameter for thin spring
-ts = 0.1e-3     !thickness of thin spring
+ts = 0.2e-3     !thickness of thin spring
 
-beta1 = 0       !angle of thin flexure on bistable element
-beta2 = 8       !angle of reinforced beam on bistable element
-beta3 = 0       !angle of second thin flexure on bistable element
-alpha = 22      !angle of reinforced beam on end-effector
-alpha2 = 2       !angle of bifurcation element
+!parameters for signal routing element
+
+
+
 
 bxoffset = 60e-3 !x offset of bifurcation element
 uc = 2*w !unit cell spacing
 Ncells = 1 ! number of unit cells
 
 disp_in = 17e-3 !displacement of input node
+
+
+!define angles
+beta1 = 0       !angle of thin flexure on bistable element
+beta2 = 8       !angle of reinforced beam on bistable element
+beta3 = 0       !angle of second thin flexure on bistable element
+alpha = 22      !angle of reinforced beam on end-effector
+alpha2 = 1       !angle of bifurcation element
+theta = 45      !angle of signal routing element
 !convert angles to radians
 beta1 = beta1*pi/180
 beta2 = beta2*pi/180
 beta3 = beta3*pi/180
 alpha = alpha*pi/180
 alpha2 = alpha2*pi/180
+theta = theta*pi/180
 
 !spring calculation
 dist = (Lr1+2*L1)*sin(alpha)
-springlength = 3*dist-h/2
-springarea = 1e-6
-springk = 120
-springe = springk*springlength/springarea
+
+
 
 !!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!! Define Materials!!
@@ -84,8 +92,8 @@ mptemp, 1, 0
 !material for rigid bodies
 MP, EX, 2, 200E12  ! Young's modulus for material ID 2
 MP, PRXY, 2, 0.3  ! Poisson's ratio for material ID 2
+!change element to rigid link MPC
 
-MP, EX, 3, springe  ! Young's modulus for material ID 3
 
 
 !reinforcement on bistable element
@@ -160,54 +168,55 @@ z = 0
 /view, 1, 1, 1, 1
 eplot
 
-/solu
+! /solu
 
-antype, 0
-nlgeom, on
-eqslv, sparse
-outres, all, all
-autots, on
-neqit, 50
-deltim, 1e-3, 1e-6, 1e-2, on
-! arclen, on
+! antype, 0
+! nlgeom, on
+! eqslv, sparse
+! outres, all, all
+! autots, on
+! neqit, 50
+! deltim, 1e-3, 1e-6, 1e-2, on
+! arclen, on,100 !maybe change radius of arclength search
 
-!Set boundary conditions
-!select nodes to be constrained
-ksel,s,kp,,7,kpo,kpnum
-ksel,a,kp,,10,kpo,kpnum
-ksel,a,kp,,30,kpo,kpnum
-ksel,a,kp,,33,kpo,kpnum
-ksel,a,kp,,34,kpo,kpnum
-ksel,a,kp,,35,kpo,kpnum
-ksel,a,kp,,43,kpo,kpnum
-ksel,a,kp,,46,kpo,kpnum
-nslk,s
-cm,fixed_nodes,node
+! !Set boundary conditions
+! !select nodes to be constrained
+! ksel,s,kp,,7,kpo,kpnum
+! ksel,a,kp,,10,kpo,kpnum
+! ksel,a,kp,,30,kpo,kpnum
+! ksel,a,kp,,33,kpo,kpnum
+! ksel,a,kp,,34,kpo,kpnum
+! ksel,a,kp,,35,kpo,kpnum
+! ksel,a,kp,,43,kpo,kpnum
+! ksel,a,kp,,46,kpo,kpnum
 
-
-!select nodes to be input
-ksel,s,kp,,49,kpo,kpnum
-ksel,a,kp,,52,kpo,kpnum
-nslk,s
-cm,input_nodes,node
+! nslk,s
+! cm,fixed_nodes,node
 
 
-ksel,s,kp,,41,kpo,kpnum
-nslk,s
-cm,connection_nodes,node
+! !select nodes to be input
+! ksel,s,kp,,49,kpo,kpnum
+! ksel,a,kp,,52,kpo,kpnum
+! nslk,s
+! cm,input_nodes,node
 
-cmsel,s,fixed_nodes
-d,all,all
-allsel
 
-!set input displacement
-cmsel,s,input_nodes
-d,all,all
-ddele,all,uy    
+! ksel,s,kp,,41,kpo,kpnum
+! nslk,s
+! cm,connection_nodes,node
 
-cmsel,s,connection_nodes
-f,all,fx,1
-allsel
+! cmsel,s,fixed_nodes
+! d,all,all
+! allsel
+
+! !set input displacement
+! cmsel,s,input_nodes
+! d,all,all
+! ddele,all,uy    
+
+! cmsel,s,connection_nodes
+! f,all,fx,2
+! allsel
 
 ! solve
 
@@ -219,3 +228,29 @@ allsel
 ! d,all,uy,disp_in
 ! allsel
 ! solve
+
+! /post1
+! /view, 1, 0, 0, 1
+! subset, last
+! plnsol,s,eqv
+
+
+! !!Render and save animation
+! antime,50,0.05
+! ! /anfile,save,resultsbifurcation3,avi
+
+
+! /post26
+
+
+! ! r
+! ksel,s,kp,,middlespring
+! nslk,s
+
+! *get,mspringnode,node,0,num,max
+! allsel
+
+! nsol,2,mspringnode,u,x,displacement
+! rforce,3,17,F,x,force
+! xvar,2
+! plvar,3

@@ -50,7 +50,7 @@ bxoffset = 60e-3 !x offset of bifurcation element
 uc = 2*w !unit cell spacing
 Ncells = 1 ! number of unit cells
 
-disp_in = 30e-3 !displacement of input node
+disp_in = 32e-3 !displacement of input node
 !convert angles to radians
 beta1 = beta1*pi/180
 beta2 = beta2*pi/180
@@ -155,9 +155,10 @@ nlgeom, on
 eqslv, sparse
 outres, all, all
 autots, on
-neqit, 50
-deltim, 1e-3, 1e-6, 1e-2, on
-arclen, on
+neqit, 100
+deltim, 1e-3, 1e-5, 1e-2, on
+lnsrch, auto
+! arclen, on
 
 !Set boundary conditions
 !select nodes to be constrained
@@ -179,19 +180,17 @@ allsel
 
 dk,topspring,all,all
 dk,topspring,ux,disp_in
-! solve
+! ! solve
 
 
 
-! dk,middlespring,all,all
-! dk,middlespring,ux,disp_in
-
-! dk,bottomspring,all,all
-! dk,bottomspring,ux,disp_in
-
+dk,middlespring,all,all
+dk,middlespring,ux,disp_in
 
 ! dk,bottomspring,all,all
 ! dk,bottomspring,ux,disp_in
+
+
 solve
 
 *get, n_steps1, active, 0, solu, ncmss
@@ -204,6 +203,9 @@ subset, last
 plnsol,s,eqv
 
 
+!!Render and save animation
+antime,50,0.05
+/anfile,save,resultsbifurcation,avi
 
 
 /post26
@@ -217,6 +219,16 @@ nsol, 2, id_disp, u, x, displacement
 rforce, 3, id_disp, F, x, force 
 xvar, 2
 plvar, 3
+
+*del, var_export
+	*dim, var_export, table, n_steps1,3
+	vget, var_export(1,0), 1
+	vget, var_export(1,1), 2
+	vget, var_export(1,2), 3
+/output, 'resultspring1','txt'
+	*vwrite, var_export(1,0), var_export(1,1), var_export(1,2)
+	%g, %g, %g
+/output, term
 
 
 ! solve

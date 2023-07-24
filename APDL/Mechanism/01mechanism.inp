@@ -121,9 +121,9 @@ subset, last
 plnsol,s,eqv
 
 
-! !!Render and save animation
-! antime,50,0.05
-! /anfile,save,results%i%,avi
+!!Render and save animation
+antime,50,0.05
+/anfile,save,results%i%,avi
 
 
 !plotting final force displacement curve
