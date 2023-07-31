@@ -152,7 +152,7 @@ eplot
 
 antype, 0
 nlgeom, on
-eqslv, sparse
+eqslv, PCG
 outres, all, all
 autots, on
 neqit, 100
