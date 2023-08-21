@@ -2,6 +2,11 @@ import sympy as sm
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.optimize as opt
+from mpl_toolkits import mplot3d
+from mpl_toolkits.mplot3d.art3d import Line3DCollection
+from matplotlib.collections import LineCollection
+
+
 
 class UnitCell:
     """
@@ -220,6 +225,7 @@ class UnitCell:
         bistable_anchor = bistable_shuttle + np.array([self.params['L2']*np.cos(beta),self.params['L2']*np.sin(beta)])
         bistable_anchor2 = bistable_shuttle + np.array([-self.params['L2']*np.cos(beta),self.params['L2']*np.sin(beta)])
         signal_router = bistable_shuttle + np.array([self.params['L3']*np.cos(gamma),self.params['L3']*np.sin(gamma)])
+        signal_router2 = signal_router + np.array([BE_DE_gap/4,0])
         bifurcation_anchor = np.array([BE_DE_gap, self.params['L1']*np.cos(self.params['alpha0'])+self.params['L4']*np.cos(self.params['theta0'])])
         bifurcation_shuttle = bifurcation_anchor + np.array([-self.params['L4']*np.sin(self.theta),-self.params['L4']*np.cos(self.theta)])
         bifurcation_signal = bifurcation_anchor+np.array([-self.L5*np.sin(self.theta),-self.L5*np.cos(self.theta)])
@@ -231,16 +237,41 @@ class UnitCell:
             end_effector, #end effector
             bistable_shuttle, #bistable shuttle
             bistable_anchor, #right bistable anchor
-            bistable_shuttle, #bistable shuttle
             bistable_anchor2, #left bistable anchor
-            bistable_shuttle, #bistable shuttle
             signal_router, #signal router
+            signal_router2, #signal router 2
             bifurcation_signal, #bifurcation signal
             bifurcation_anchor, #bifurcation anchor
             bifurcation_shuttle, #bifurcation shuttle
             bifurcation_input, #bifurcation input
         ])
+        #convert points to dtype float
+        points = points.astype(float)
         return points
+
+    def compute_lines(self):
+        points = self.compute_points()
+        tristable_lines = [
+            [points[0], points[1]], #origin to end effector
+            [points[1], points[2]], #end effector to bistable shuttle
+            [points[2], points[3]], #bistable shuttle to right bistable anchor
+            [points[2], points[4]], #bistable shuttle to left bistable anchor
+        ]
+        signal_router_lines = [
+            [points[2], points[5]], #bistable shuttle to signal router
+            [points[5], points[6]], #signal router to signal router 2
+        ]
+        bifurcation_lines = [
+            [points[8], points[9]], #bifurcation anchor to bifurcation shuttle
+            [points[9], points[10]], #bifurcation shuttle to bifurcation input
+        ]
+        spring_length = np.linalg.norm(points[7]-points[6])
+        signal_spring = Spring(ne=4, a=spring_length, r0=3e-3)
+        ss_xs, ss_ys= signal_spring.compute(*points[7], *points[6])
+        #compute the lines of the signal spring, 
+        signal_spring_lines = [[(ss_xs[i],ss_ys[i]),(ss_xs[i+1],ss_ys[i+1])] for i in range(len(ss_xs)-1)]
+
+        return tristable_lines, signal_router_lines, bifurcation_lines, signal_spring_lines
 
 
 
@@ -248,7 +279,7 @@ class System:
     def __init__(self, init_config, params):
         self.n = len(init_config)
         self.u = -1e-3
-        self.cell_spacing = 5e-3
+        self.cell_spacing = 10e-3
         self.params = params
         
         # Initialize unit cells
@@ -323,34 +354,51 @@ class System:
         return energy
     
     def compute_residuals(self, state_vector=None):
-            """
-            Computes the residuals of the system given the current state vector.
+        """
+        Computes the residuals of the system given the current state vector.
 
-            Args:
-            state_vector (numpy.ndarray): The current state vector.
+        Args:
+        state_vector (numpy.ndarray): The current state vector.
 
-            Returns:
-            residuals (numpy.ndarray): The residuals of the system.
-            """
-            # Update state in each cell
-            if state_vector is not None:
-                self.update_state(state_vector)
-            else:
-                state_vector = self.state_vector
+        Returns:
+        residuals (numpy.ndarray): The residuals of the system.
+        """
+        # Update state in each cell
+        if state_vector is not None:
+            self.update_state(state_vector)
+        else:
+            state_vector = self.state_vector
+        # Compute residuals
+        moment_residuals = np.zeros(2*self.n)
+        force_residuals = np.zeros(2*self.n)
+        for cell in self.unit_cells:
+            M_d, M_b,M_b_prev,M_b_next = cell.compute_force_residuals(self.u)
+            moment_residuals[2*cell.i] = M_d
+            moment_residuals[2*cell.i+1] = M_b
 
-            # Compute residuals
-            force_residuals = np.zeros(2*self.n)
-            for cell in self.unit_cells:
-                F_d, F_b,F_b_prev,F_b_next = cell.compute_force_residuals(self.u)
-                force_residuals[2*cell.i] = F_d
-                force_residuals[2*cell.i+1] = F_b
-                
-                #check physical validity of this bit
-                if cell.left_neighbor is not None:
-                    force_residuals[2*cell.i-1] += F_b_prev
-                if cell.right_neighbor is not None:
-                    force_residuals[2*cell.i+3] += F_b_next
-            return force_residuals
+            if cell.left_neighbor is not None:
+                moment_residuals[2*cell.i-1] += M_b_prev
+            if cell.right_neighbor is not None:
+                moment_residuals[2*cell.i+3] += M_b_next
+        return moment_residuals
+    
+    def compute_force_residuals(self, state_vector=None):
+        # Update state in each cell
+        if state_vector is not None:
+            self.update_state(state_vector)
+        else:
+            state_vector = self.state_vector
+
+        force_residuals = np.zeros(2*self.n)
+        for cell in self.unit_cells:
+            M_d, M_b,M_b_prev,M_b_next = cell.compute_force_residuals(self.u)
+            force_residuals[2*cell.i] = M_d/(self.params['L1']*np.cos(cell.alpha))
+            force_residuals[2*cell.i+1] = M_b/(self.params['L4']*np.cos(cell.theta))
+            if cell.left_neighbor is not None:
+                force_residuals[2*cell.i-1] += M_b_prev/(self.params['L4']*np.cos(cell.left_neighbor.theta))
+            if cell.right_neighbor is not None:
+                force_residuals[2*cell.i+3] += M_b_next/(self.params['L4']*np.cos(cell.right_neighbor.theta))
+        return force_residuals
 
     def get_quantity(self, quantity, state_vector=None):
 
@@ -376,7 +424,7 @@ class System:
             state_vector = self.state_vector
 
         # Compute quantities
-        results = {key: np.array([cell.compute_quantities(self.u)[key] for cell in self.unit_cells])
+        results = {key: [cell.compute_quantities(self.u)[key] for cell in self.unit_cells]
                for key in self.unit_cells[0].expressions.keys()}
         return results
 
@@ -398,60 +446,200 @@ class System:
     def simulate_actuation(self, u_range):
         states = np.zeros((len(u_range), 2*self.n))
 
-        quantities = {key: [] for key in self.unit_cells[0].expressions.keys()}
+        quantities = {key: np.ndarray((self.n,len(u_range))) for key in self.unit_cells[0].expressions.keys()}
 
-        for u in u_range:
+        for i,u in enumerate(u_range):
+            prev_u = self.u
             self.u = u
-            #fix alpha to alpha0 for 2e-3<u<4e-3
-            if 1e-3<u<1.5e-3:
+            threshold = 1e-3
+            #resetting mechanism
+            if prev_u<threshold and u>threshold:
                 self.set_bounds(self.params['alpha0'],self.params['alpha0'],self.thetalb,self.thetaub)
             else:
                 self.set_bounds(self.alphalb,self.alphaub,self.thetalb,self.thetaub)
 
             self.state_vector = self.solve_equilibrium()
-            states[u_range==u] = self.state_vector
+            states[i] = self.state_vector
 
             current_quantities = self.get_intermediate_quantities()
             for key in quantities.keys():
 
-                quantities[key].append(current_quantities[key])
+                quantities[key][:,i] = current_quantities[key]
 
-            for key in quantities.keys():
-                quantities[key] = np.array(quantities[key])
+            
 
             
         return states, quantities
 
-    def plot_system(self):
-        fig = plt.figure()
-        ax = plt.axes(projection='3d')
-        self.mechs = []
-        for cell in self.unit_cells:
-            points = cell.compute_points()
-            z_loc = cell.i*self.cell_spacing
-            h = plt.plot(points[:, 0],z_loc*np.ones(points.shape[0]), points[:, 1],'k-o')
-            self.mechs.append(h)
-        ax.set_box_aspect((1,1,1))
+    def plot_system(self, fig = None, ax = None):
+        if fig is None:
+            fig = plt.figure()
+        if ax is None:
+            ax = plt.axes(projection='3d')
 
-        #remove axes
+        xlim = [-0.025, 0.1]
+        ylim = [-0.05, self.cell_spacing*self.n+0.05]
+        zlim = [-0.03, 0.1]
+        ax.set_xlim3d(xlim)
+        ax.set_ylim3d(ylim)
+        ax.set_zlim3d(zlim)
+        ax.set_box_aspect((xlim[1]-xlim[0], ylim[1]-ylim[0], zlim[1]-zlim[0]))
         ax.set_axis_off()
         ax.set_xticks([])
         ax.set_yticks([])
         ax.set_zticks([])
+        ax.view_init(0, -90)
+        ax.set_proj_type('ortho')
+        
 
-        #set view
-        ax.view_init(0, -87)
+        self.tristable_lines = []
+        self.tristable_joints = []
+        self.signal_router_lines = []
+        self.signal_router_joints = []
+        self.bifurcation_lines = []
+        self.bifurcation_joints = []
+        self.signal_spring_lines = []
+        self.self_spring_lines = []
+        self.left_spring_lines = []
+        self.right_spring_lines = []
+        self.indicators = []
+        
+        for cell in self.unit_cells:
+            points = cell.compute_points()
+            tristable_lines, signal_router_lines, bifurcation_lines, signal_spring_lines = cell.compute_lines()
+
+            z_loc = cell.i*self.cell_spacing
+            tristable_mech = ax.add_collection3d(LineCollection(tristable_lines,color='k'), zs=z_loc, zdir='y')
+            self.tristable_lines.append(tristable_mech)
+            signal_router_mech = ax.add_collection3d(LineCollection(signal_router_lines,color='k'), zs=z_loc, zdir='y')
+            self.signal_router_lines.append(signal_router_mech)
+            bifurcation_mech = ax.add_collection3d(LineCollection(bifurcation_lines,color='k'), zs=z_loc, zdir='y')
+            self.bifurcation_lines.append(bifurcation_mech)
+            signal_spring_mech = ax.add_collection3d(LineCollection(signal_spring_lines,color='k'), zs=z_loc, zdir='y')
+            self.signal_spring_lines.append(signal_spring_mech)
+
+            z_locs = np.array([z_loc]*points.shape[0])
+            tristable_joints = ax.scatter(points[:5, 0], z_locs[:5], points[:5, 1], c='w', marker='o',depthshade=False,edgecolors='k')
+            self.tristable_joints.append(tristable_joints)
+            signal_router_joints = ax.scatter(points[5:8, 0], z_locs[5:8], points[5:8, 1], c='w', marker='o',depthshade=False,edgecolors='k')
+            self.signal_router_joints.append(signal_router_joints)
+            bifurcation_joints = ax.scatter(points[8:, 0], z_locs[8:], points[8:, 1], c='w', marker='o',depthshade=False,edgecolors='k')
+            self.bifurcation_joints.append(bifurcation_joints)
+            
+            
+            cell.self_spring = Spring(ne=10, a=0.05, r0=3e-3)
+            cell.self_spring.initialize_leads(*points[9],z_loc, *points[1],z_loc)
+            ss_xs, ss_zs, ss_ys = cell.self_spring.compute_with_leads(*points[9],z_loc, *points[1],z_loc)
+            self_spring_lines = [[(ss_xs[i],ss_ys[i],ss_zs[i]),(ss_xs[i+1],ss_ys[i+1],ss_zs[i+1])] for i in range(len(ss_xs)-1)]
+            self_spring_mech = ax.add_collection3d(Line3DCollection(self_spring_lines,color='g'))
+            self.self_spring_lines.append(self_spring_mech)
+
+            if cell.left_neighbor is not None:
+                cell.left_spring = Spring(ne=10, a=0.05, r0=3e-3)
+                left_points = cell.left_neighbor.compute_points()
+                cell.left_spring.initialize_leads(*points[1],z_loc, *left_points[9],z_loc-self.cell_spacing)
+                ss_xs, ss_zs, ss_ys = cell.left_spring.compute_with_leads(*points[1],z_loc, *left_points[9],z_loc-self.cell_spacing)
+                left_spring_lines = [[(ss_xs[i],ss_ys[i],ss_zs[i]),(ss_xs[i+1],ss_ys[i+1],ss_zs[i+1])] for i in range(len(ss_xs)-1)]
+                left_spring_mech = ax.add_collection3d(Line3DCollection(left_spring_lines,color='b'))
+                self.left_spring_lines.append(left_spring_mech)
+            else:
+                self.left_spring_lines.append(None)
+            if cell.right_neighbor is not None:
+                cell.right_spring = Spring(ne=10, a=0.05, r0=3e-3)
+                right_points = cell.right_neighbor.compute_points()
+                cell.right_spring.initialize_leads(*points[1],z_loc, *right_points[9],z_loc+self.cell_spacing)
+                ss_xs, ss_zs, ss_ys = cell.right_spring.compute_with_leads(*points[1],z_loc, *right_points[9],z_loc+self.cell_spacing)
+                right_spring_lines = [[(ss_xs[i],ss_ys[i],ss_zs[i]),(ss_xs[i+1],ss_ys[i+1],ss_zs[i+1])] for i in range(len(ss_xs)-1)]
+                right_spring_mech = ax.add_collection3d(Line3DCollection(right_spring_lines,color='r'))
+                self.right_spring_lines.append(right_spring_mech)
+            else:
+                self.right_spring_lines.append(None)
+
+            #plot a point above the bifurcation element with a box marker
+            indicator, = plt.plot(points[7,0],z_loc,points[7,1]+30e-3,'ks')
+            plt.setp(indicator, markersize=10)
+            plt.setp(indicator, markeredgecolor='k')
+            plt.setp(indicator, zorder=10)
+            self.indicators.append(indicator)
+            # color the box marker white if the bifurcation element is in the off state, which is when theta is positive
+            if cell.theta>0:
+                plt.setp(indicator, color='w')
+
+        ax.set_xlim3d(-0.025, 0.1)
+        ax.set_ylim3d(-0.05, self.cell_spacing*self.n+0.05)
+        ax.set_zlim3d(-0.03, 0.1)
+        ax.set_position((0,0,1,1))
 
         return fig, ax
 
     def update_plot(self, frame, states):
         self.update_state(states[frame])
-        for i,cell in enumerate(self.unit_cells):
+
+        def update_lines(lines):
+            return [[(x[0][0], z_loc, x[0][1]), (x[1][0], z_loc, x[1][1])]
+            for x in lines
+            ]
+
+
+        for i, cell in enumerate(self.unit_cells):
+            z_loc = cell.i * self.cell_spacing
             points = cell.compute_points()
-            z_loc = cell.i*self.cell_spacing
-            self.mechs[i][0].set_data(points[:, 0], z_loc*np.ones(points.shape[0]))
-            self.mechs[i][0].set_3d_properties(points[:, 1])
-        return self.mechs
+            tristable_lines, signal_router_lines, bifurcation_lines, signal_spring_lines = cell.compute_lines()
+            tristable_lines = update_lines(tristable_lines)
+            signal_router_lines = update_lines(signal_router_lines)
+            bifurcation_lines = update_lines(bifurcation_lines)
+            signal_spring_lines = update_lines(signal_spring_lines)
+            
+            # Update tristable mechanism lines
+            self.tristable_lines[i].set_segments(tristable_lines)
+
+            # Update signal router mechanism lines
+            self.signal_router_lines[i].set_segments(signal_router_lines)
+
+            # Update bifurcation mechanism lines
+            self.bifurcation_lines[i].set_segments(bifurcation_lines)
+
+            # Update signal spring mechanism lines
+            self.signal_spring_lines[i].set_segments(signal_spring_lines)
+
+            # Update joints (scatter points)
+            # Update tristable joints
+            self.tristable_joints[i]._offsets3d = (points[:5, 0], z_loc * np.ones(5), points[:5, 1])
+
+            # Update signal router joints
+            self.signal_router_joints[i]._offsets3d = (points[5:8, 0], z_loc * np.ones(3), points[5:8, 1])
+
+            # Update bifurcation joints
+            self.bifurcation_joints[i]._offsets3d = (points[8:, 0], z_loc * np.ones(points.shape[0]-8), points[8:, 1])
+            # Update self spring mechanism
+
+            ss_xs, ss_zs, ss_ys = cell.self_spring.compute_with_leads(*points[9], z_loc, *points[1], z_loc)
+            self_spring_lines = [[(ss_xs[j], ss_ys[j], ss_zs[j]), (ss_xs[j+1], ss_ys[j+1], ss_zs[j+1])] for j in range(len(ss_xs)-1)]
+            self.self_spring_lines[i].set_segments(self_spring_lines)
+
+            # Update left spring mechanism
+            if cell.left_neighbor is not None:
+                left_points = cell.left_neighbor.compute_points()
+                ls_xs, ls_zs, ls_ys = cell.left_spring.compute_with_leads(*points[1], z_loc, *left_points[9], z_loc-self.cell_spacing)
+                left_spring_lines = [[(ls_xs[j], ls_ys[j], ls_zs[j]), (ls_xs[j+1], ls_ys[j+1], ls_zs[j+1])] for j in range(len(ls_xs)-1)]
+                self.left_spring_lines[i].set_segments(left_spring_lines)
+
+            # Update right spring mechanism
+            if cell.right_neighbor is not None:
+                right_points = cell.right_neighbor.compute_points()
+                rs_xs, rs_zs, rs_ys = cell.right_spring.compute_with_leads(*points[1], z_loc, *right_points[9], z_loc+self.cell_spacing)
+                right_spring_lines = [[(rs_xs[j], rs_ys[j], rs_zs[j]), (rs_xs[j+1], rs_ys[j+1], rs_zs[j+1])] for j in range(len(rs_xs)-1)]
+                self.right_spring_lines[i].set_segments(right_spring_lines)
+
+            # Update indicator colour
+            if cell.theta>0:
+                plt.setp(self.indicators[i], color='w')
+            else:
+                plt.setp(self.indicators[i], color='k')
+            
+        return self.tristable_lines + self.signal_router_lines + self.bifurcation_lines + self.signal_spring_lines + self.tristable_joints + self.signal_router_joints + self.bifurcation_joints + self.self_spring_lines + self.left_spring_lines + self.right_spring_lines + self.indicators
+
+
     
     def get_configuration(self):
         betas = [cell.beta for cell in self.unit_cells]
@@ -463,6 +651,145 @@ class System:
         assert len(configuration) == self.n, "Configuration must be a list of length n"
         assert all([c==0 or c==1 for c in configuration]), "Configuration must be a list of 0s and 1s"
 
-        for i,cell in enumerate(self.unit_cells):
-            cell.alpha = 0 if configuration[i] else np.deg2rad(self.params['alpha0'])
+        # print("Setting configuration to {}".format(configuration))
+        for i in range(self.n):
+            self.state_vector[2*i] = 0 if configuration[i] else self.params['alpha0']
         self.solve_equilibrium()
+
+class Spring:
+    """
+    A class representing a spring.
+
+    Attributes:
+    -----------
+    ne : int
+        Number of elements in the spring.
+    a : float
+        Length of the spring.
+    r0 : float
+        Natural radius of the spring.
+    Li_2 : float
+        Square of the length of each element of the spring.
+    ei : numpy.ndarray
+        vector of longitudinal coordinates of the spring elements.
+    b : numpy.ndarray
+        vector of transverse coordinates of the spring elements.
+    """
+
+    def __init__(self, ne=None, a=None, r0=None):
+        self.ne = ne
+        self.a = a
+        self.r0 = r0
+        self.Li_2 = None
+        self.ei = None
+        self.b = None
+        if all([ne, a, r0]):
+            self._initialize()
+
+    def _initialize(self):
+        """
+        Initializes the spring parameters.
+        """
+        self.Li_2 = (self.a / (4 * self.ne))**2 + self.r0**2
+        self.ei = np.arange(2 * self.ne + 2)
+        j = np.arange(2 * self.ne)
+        self.b = np.concatenate(([0], (-1)**j, [0]))
+
+    def compute(self, xa, ya, xb, yb):
+        """
+        Computes the position of the spring.
+
+        Parameters:
+        -----------
+        xa : float
+            x-coordinate of the starting point of the spring.
+        ya : float
+            y-coordinate of the starting point of the spring.
+        xb : float
+            x-coordinate of the ending point of the spring.
+        yb : float
+            y-coordinate of the ending point of the spring.
+
+        Returns:
+        --------
+        xs : numpy.ndarray
+            Array of x-coordinates of the spring elements.
+        ys : numpy.ndarray
+            Array of y-coordinates of the spring elements.
+        """
+        if self.ne is None or self.a is None or self.r0 is None:
+            raise ValueError("Spring parameters not initialized!")
+        
+        R = np.array([xb, yb]) - np.array([xa, ya])
+        mod_R = np.linalg.norm(R)
+        L_2 = (mod_R / (4 * self.ne))**2
+        
+        if L_2 > self.Li_2:
+            raise ValueError("Initial conditions cause pulling the spring beyond its maximum large. Try reducing these conditions.")
+        else:
+            r = np.sqrt(self.Li_2 - L_2)
+        
+        c = r * self.b
+        u1 = R / mod_R
+        u2 = np.array([-u1[1], u1[0]])
+        
+        xs = xa + u1[0] * (mod_R / (2 * self.ne + 1)) * self.ei + u2[0] * c
+        ys = ya + u1[1] * (mod_R / (2 * self.ne + 1)) * self.ei + u2[1] * c
+        
+        return xs, ys
+    
+    def compute3d(self, xa, ya, za, xb, yb, zb):
+        if self.ne is None or self.a is None or self.r0 is None:
+            raise ValueError("Spring parameters not initialized!")
+        
+        R = np.array([xb, yb, zb]) - np.array([xa, ya, za])
+        mod_R = np.linalg.norm(R)
+        L_2 = (mod_R / (4 * self.ne))**2
+        
+        if L_2 > self.Li_2:
+            raise ValueError("Initial conditions cause pulling the spring beyond its maximum length. Try reducing these conditions.")
+        else:
+            r = np.sqrt(self.Li_2 - L_2)
+        
+        u1 = R / mod_R
+        # Define the yv vector perpendicular to the xz-plane
+        yv = np.array([0,1,0])
+
+
+        u3 = np.cross(yv, u1)
+        # Compute the u3 vector which is the cross product of yv and u2
+        u2 = np.cross(u1, u3)
+
+        
+        xs = xa + u1[0] * (mod_R / (2 * self.ne + 1)) * self.ei + u2[0] * r * self.b
+        ys = ya + u1[1] * (mod_R / (2 * self.ne + 1)) * self.ei + u2[1] * r * self.b
+        zs = za + u1[2] * (mod_R / (2 * self.ne + 1)) * self.ei + u2[2] * r * self.b
+        
+        return xs, ys, zs
+    
+    def initialize_leads(self, xa, ya, za, xb, yb, zb):
+        # Calculate the total distance between points A and B
+        R = np.array([xb, yb, zb]) - np.array([xa, ya, za])
+        mod_R = np.linalg.norm(R)
+        
+        # Calculate lead length (buffer on each side)
+        self.lead_length = (mod_R - self.a) / 2
+        
+        # Calculate the direction vector between points A and B
+        self.u1_lead = R / mod_R
+
+    def compute_with_leads(self, xa, ya, za, xb, yb, zb):
+        # Calculate the new start and end points for the spring using lead lengths
+        spring_start = np.array([xa, ya, za]) + self.u1_lead * self.lead_length
+        spring_end = np.array([xb, yb, zb]) - self.u1_lead * self.lead_length
+        
+        # Get spring points using the 3D compute method
+        xs, ys, zs = self.compute3d(spring_start[0], spring_start[1], spring_start[2],
+                                  spring_end[0], spring_end[1], spring_end[2])
+        
+        # Add the lead sections to the spring points
+        xs = np.concatenate(([xa], xs, [xb]))
+        ys = np.concatenate(([ya], ys, [yb]))
+        zs = np.concatenate(([za], zs, [zb]))
+
+        return xs, ys, zs

@@ -47,7 +47,7 @@ def drawPlaneInCube(ax,pl,T,r=[0,1]):
     #T is offset value
     #pl is the normal vector of
     sfc = []
-    pl = normalize(pl)
+    # pl = normalize(pl)
     
     for s, e in combinations(np.array(list(product(r, r, r))), 2): #loops through each pair of points
         
@@ -75,23 +75,26 @@ def drawPlaneInCube(ax,pl,T,r=[0,1]):
         pc.set_alpha(0.5)
         pc.set_edgecolor('black')
         ax.add_collection3d(pc)
+        return pc
 
-    return sfc 
+    return None
 
-def plotSetup(r = [0,1],fig= None,spdim = [1,1],i=1,proj = 'persp',elev=30., azim=330):
+def plotSetup(r = [0,1],fig= None,ax = None,spdim = [1,1],i=1,proj = 'persp',elev=30., azim=330):
     if fig is None:
         fig = plt.figure(figsize=(8, 6), dpi=80)
-    ax = fig.add_subplot(*spdim,i, projection='3d',proj_type = proj)
+    if ax is None:
+        ax = fig.add_subplot(*spdim,i, projection='3d',proj_type = proj)
     s = 1.2
-    ax.xaxis.pane.fill = False
-    ax.yaxis.pane.fill = False
-    ax.zaxis.pane.fill = False
-    ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 1.0)) # Hide YZ Plane
-    ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 1.0)) # Hide XZ Plane
-    # Get rid of the spines                         
-    ax.w_xaxis.line.set_color((1.0, 1.0, 1.0, 0.0)) 
-    ax.w_yaxis.line.set_color((1.0, 1.0, 1.0, 0.0)) 
+    # ax.set_axis_off()
+    #set spine opacity to 0
+    ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+    ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+    ax.w_zaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
+    #hide spines
+    ax.w_xaxis.line.set_color((1.0, 1.0, 1.0, 0.0))
+    ax.w_yaxis.line.set_color((1.0, 1.0, 1.0, 0.0))
     ax.w_zaxis.line.set_color((1.0, 1.0, 1.0, 0.0))
+    
     ax.grid(False)
     ax.set_xticks([])
     ax.set_yticks([])
@@ -111,7 +114,31 @@ def drawRule(ax,rule,r=[0,1],labelCorners=True):
     rulebin = f'{rule:#010b}'[-1:1:-1] #creates binary representation by rule number
     plt.title(f"Rule = {rule} : {rulebin}")
     rulebin = [bool(int(x)) for x in rulebin]
-    ax.scatter(*list(zip(*np.array(list(product(r, r, r))))),c=rulebin,cmap='Greys',s=100,edgecolors='black',vmin=0,alpha=1)
+    sc = ax.scatter(*list(zip(*np.array(list(product(r, r, r))))),c=rulebin,cmap='Greys',s=100,edgecolors='black',vmin=0,alpha=1,marker='s')
     if labelCorners:
         for p in np.array(list(product(r, r, r))):
             ax.text(*p,f"{p[0]}{p[1]}{p[2]}\n",horizontalalignment='center',verticalalignment='bottom')
+    return sc
+
+# Update the plotting function to use filled square markers for vertices
+def plot_cube_with_planes(ax,normal, offset1, offset2):
+
+    # normal= normalize(normal)
+    # Check if vertex is between the planes
+    vertices = list(product([0, 1], [0, 1], [0, 1]))
+    for vertex in vertices:
+        # vertex = np.array(vertex).astype(float)
+        dot_product1 = np.dot(normal, vertex) - offset1
+        dot_product2 = np.dot(normal, vertex) - offset2
+
+        if dot_product1 * dot_product2 < 0:
+            ax.scatter(*vertex, color='black', edgecolor='black', s=300, marker='s')
+        else:
+            ax.scatter(*vertex, color='white', edgecolor='black', s=300, marker='s')
+
+    # Draw the planes intersecting the cube
+    pl1 = drawPlaneInCube(ax, normal, offset1)
+    pl2 = drawPlaneInCube(ax, normal, offset2)
+    return (pl1,pl2)
+
+

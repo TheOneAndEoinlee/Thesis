@@ -1,11 +1,15 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from itertools import product, combinations, permutations
+from matplotlib.animation import FuncAnimation
+from numpy.ma import masked_array
+
+
 
 class ElementaryCA:
     
     def __init__(self,rule):
-        self.rule = rule;
+        self.rule = rule
         self.rule_binary = [int(x)for x in f'{rule:#010b}'[-1:1:-1]]
         
         
@@ -14,11 +18,11 @@ class ElementaryCA:
         self.time_history = np.zeros([height,width])
         
         if init_state == 'point':
-            self.time_history[0,width//2]=1;
+            self.time_history[0,width//2]=1
         if init_state== 'random':
             self.time_history[0,:] = np.round(np.random.rand(1,width))
         if init_state == 'right':
-            self.time_history[0,width-1]=1;
+            self.time_history[0,width-1]=1
         #evolve system over time
         for t in range(1,height):
             for i in range(1,width):
@@ -29,7 +33,7 @@ class ElementaryCA:
     def show(self,ax = None,showTitle=True):
         flag = 0
         if ax is None:
-            flag = 1;
+            flag = 1
             fig = plt.figure(figsize=(8, 6), dpi=150)
             ax = fig.add_subplot(1,1,1)
         ax.imshow(self.time_history,cmap='Greys',interpolation='none')
@@ -48,7 +52,69 @@ class ElementaryCA:
                 
     def binlist2dec(self,binary,inverted=-1):
         return int(sum([x*2**i for i,x in enumerate(binary[::inverted])]))
-                
+    def animate(self, interval=50):
+        fig, ax = plt.subplots(figsize=(8, 6), dpi=150)
+        ax.axis('off')
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+        ax.get_xaxis().set_ticks([])
+        # This will display the first row to start with
+        # Create a masked array where all elements are initially masked
+        # Create a masked version of time history
+        masked_data = np.ma.masked_array(self.time_history, mask=True)
+        masked_data.mask[0, :] = False
+        
+        im = ax.imshow(masked_data, cmap='Greys', interpolation='none')
+        
+        def update(frame):
+            # Unmask one additional row
+            masked_data.mask[frame, :] = False
+            im.set_array(masked_data)
+            return [im]
+
+        ani = FuncAnimation(fig, update, frames=self.time_history.shape[0], 
+                            blit=True, interval=interval, repeat=False)
+
+        return ani
+    
+    def animatepcm(self, interval=50):
+        fig, ax = plt.subplots(figsize=(8, 6), dpi=150)
+        ax.axis('off')
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+        ax.get_xaxis().set_ticks([])
+
+        # Create a masked array where all elements are initially masked
+        masked_data = np.ma.masked_array(self.time_history, mask=True)
+        masked_data.mask[0, :] = False
+
+        # Define the grid for pcolormesh
+        y, x = np.mgrid[slice(0, masked_data.shape[0] + 1),
+                        slice(0, masked_data.shape[1] + 1)]
+        
+        im = ax.pcolormesh(x, y, masked_data, shading='auto', cmap='Greys')
+        
+        def update(frame):
+            # Unmask one additional row
+            masked_data.mask[frame, :] = False
+            im.set_array(masked_data[:-1, :-1].ravel())
+            return [im]
+
+        ani = FuncAnimation(fig, update, frames=self.time_history.shape[0], 
+                            blit=True, interval=interval, repeat=False)
+
+        return ani
+
+
+
+
+
+
+
 
         
         
