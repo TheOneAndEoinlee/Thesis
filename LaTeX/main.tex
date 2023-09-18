@@ -1,0 +1,118 @@
+\documentclass[a4paper]{article}
+
+%%%%%%%% CREATE DOCUMENT STRUCTURE %%%%%%%%
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{subfig}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+% \usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{sectsty}
+\usepackage{float}
+\usepackage{titling} 
+\usepackage{blindtext}
+\usepackage{todonotes}
+\usepackage[
+backend=biber,
+style=numeric,
+sorting=none
+]{biblatex}
+%\addbibresource{references.bib}
+%\addbibresource{ref.bib}
+
+\usepackage{xcolor}
+\definecolor{darkgreen}{rgb}{0.0, 0.4, 0.0}
+\setlength{\parindent}{0pt}
+
+%%%%%%%% DOCUMENT %%%%%%%%
+\begin{document}
+
+%%%% Title Page
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 							% horizontal line and its thickness
+\center 
+ 
+% University
+\textsc{\LARGE Delft University of Technology}\\[1cm]
+
+% Document info
+\textsc{\Large LITERATURE RESEARCH \& PROJECT PROPOSAL}\\[0.2cm]
+\textsc{\large ME56010-22}\\[1cm] 										% Course Code
+\HRule \\[0.8cm]
+{ \huge \bfseries Bi-threshold Gates for Mechanical Logic in Intelligent Metamaterials }\\[0.7cm]								% Assignment
+\HRule \\[2cm]
+\large
+\emph{Authors:}\\
+Eoinlee Bley (5216737)\\[1.5cm]	
+\emph{Supervisors:}\\
+Dr. Davood Farhadi Machekposhti\\
+Malte ten Wolde\\[1.5cm]
+% Author info
+in partial fulfillment of the requirements for the degree of \\[0.5cm]
+\textbf{Master of Science}\\
+in Mechanical Engineering\\[0.5cm]
+{\large \today}\\[5cm]
+\includegraphics[width=0.6\textwidth]{images/TU_delft_logo.jpg}\\[1cm] 	% University logo
+\vfill 
+\end{titlepage}
+
+\begin{abstract}
+
+\end{abstract}
+
+\tableofcontents
+
+%%%% SECTIONS
+%% Section 1
+\include{Preface}
+
+
+%%%%%%%% EXTRA TIPS %%%%%%%%
+%%keep this structure for images
+%%\begin{figure}[H]
+%%\centering
+%%\includegraphics[]{Pendulum.jpg}
+%%\caption{Sketch of the pendulum}
+%%\label{fig:pendulum}
+%%\end{figure}
+
+% \begin{figure}[H]
+%      \centering
+%      \begin{subfigure}[b]{0.3\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/}
+%          \caption{capa}
+%          \label{fig:label1}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.3\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/}
+%          \caption{capb}
+%          \label{fig:label2}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.3\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{images/}
+%          \caption{capc}
+%          \label{fig:label3}
+%      \end{subfigure}
+%         \caption{Figcaption}
+%         \label{fig:labelfig}
+% \end{figure}
+
+
+\end{document}

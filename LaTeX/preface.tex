@@ -1,0 +1,50 @@
+\subsection{Elementary Cellular Automata Formalism}
+\[
+\begin{array}{lll}
+\text{1. State Space:} & S = \{0, 1\} \\
+\\
+\text{2. Neighborhood Configuration:} & N \\
+& N = (N_{-1}, N_0, N_1) \quad \text{where} \quad N_{-1}, N_0, N_1 \in S \\
+\\
+\text{3. Rule Function:} & f: S^3 \to S \\
+\\
+\text{4. Rule Set:} & R \\
+\\
+\text{5. Cube Domain:} & D \subset \mathbb{R}^3 \\
+& \text{Each vertex directly corresponds to a neighborhood configuration } N, \text{ and its state is given by } f(N). \\
+\\
+\text{6. Separating Planes:} & P \\
+& \text{Defined by a single normal vector } \mathbf{n} \text{ and different offsets } \{d_1, d_2, \ldots, d_n\}. \\
+\\
+\text{7. Domain Classification Function:} & \Delta: D \to \{0, 1, 2, 3\} \\
+& \Delta(x) = \sum_{i=1}^{n} H(n_x \cdot x_x + n_y \cdot x_y + n_z \cdot x_z - d_i) \\
+& H(z) = 
+\begin{cases} 
+0 & \text{if } z < 0 \\
+1 & \text{if } z \geq 0 
+\end{cases}
+\end{array}
+\]
+
+\subsection{Wolfram Numbering Scheme for ECA}
+In the Wolfram numbering scheme for Elementary Cellular Automata (ECA), the rule set \( R \) can be uniquely identified by a single integer, which is the binary representation of the output states for all possible neighborhood configurations. For Rule 110, the binary representation is formed by considering all 8 possible 3-cell neighborhood configurations, starting from \( 111 \) down to \( 000 \).
+
+For example, in Rule 110, the corresponding output states for these configurations are \( 01101110 \). Here's how it maps:
+
+\[
+\begin{array}{ccc}
+\text{Neighborhood Configuration} & \text{Output State} & \text{Binary Position (b)} \\
+\hline
+111 & 0 & b_7 \\
+110 & 1 & b_6 \\
+101 & 1 & b_5 \\
+100 & 0 & b_4 \\
+011 & 1 & b_3 \\
+010 & 1 & b_2 \\
+001 & 1 & b_1 \\
+000 & 0 & b_0 \\
+\end{array}
+\]
+
+So, the Wolfram number for Rule 110 is obtained by reading the output states from \( b_7 \) to \( b_0 \) as a binary number: \( 01101110_2 = 110_{10} \).
+

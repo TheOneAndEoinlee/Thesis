@@ -1,0 +1,3 @@
+\babel@toc {english}{}\relax 
+\contentsline {subsection}{\numberline {0.1}Elementary Cellular Automata Formalism}{2}{subsection.0.1}%
+\contentsline {subsection}{\numberline {0.2}Wolfram Numbering Scheme for ECA}{2}{subsection.0.2}%

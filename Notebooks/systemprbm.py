@@ -2,9 +2,11 @@ import sympy as sm
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.optimize as opt
+import scipy.signal as sig
 from mpl_toolkits import mplot3d
 from mpl_toolkits.mplot3d.art3d import Line3DCollection
 from matplotlib.collections import LineCollection
+import prbm_helper_functions as phf
 
 
 
@@ -278,13 +280,15 @@ class UnitCell:
 class System:
     def __init__(self, init_config, params):
         self.n = len(init_config)
-        self.u = -1e-3
+        self.u_init = -1e-3
+        self.u = self.u_init
         self.cell_spacing = 10e-3
+        self.threshold = 1e-3
         self.params = params
         
         # Initialize unit cells
-        alpha_init = 22*np.pi/180
-        theta_init = 2*np.pi/180
+        alpha_init = params['alpha0']
+        theta_init = params['theta0']
 
         self.unit_cells = [UnitCell(alpha_init, theta_init, params,i) for i in range(self.n)]
         self.state_vector = np.zeros(2*self.n)
@@ -438,22 +442,28 @@ class System:
         """
         # Collect all force residuals
         equilibria = opt.minimize(self.compute_energy, self.state_vector,bounds=self.bounds, method='SLSQP', jac=self.compute_residuals, options={'ftol': 1e-12, 'disp': False})
-        self.update_state(equilibria.x)
+
 
         # Solve the system of equations here using a suitable numerical method
         return equilibria.x
 
-    def simulate_actuation(self, u_range):
-        states = np.zeros((len(u_range), 2*self.n))
+    def simulate_actuation(self, d6max = 33e-3,n_cycles = 1,frames_per_cycle = 1000):
 
+        umax = 2*(self.params['L4']-np.sqrt(self.params['L4']**2-d6max**2))
+        t = np.linspace(0, n_cycles, int(frames_per_cycle*n_cycles))
+        u_range = (sig.sawtooth(2*np.pi*t, width=0.5)+1)/2*(umax-self.u_init)+self.u_init
+
+        #initialize the states and quantities
+        states = np.zeros((len(u_range), 2*self.n))
         quantities = {key: np.ndarray((self.n,len(u_range))) for key in self.unit_cells[0].expressions.keys()}
+
 
         for i,u in enumerate(u_range):
             prev_u = self.u
             self.u = u
-            threshold = 1e-3
+            
             #resetting mechanism
-            if prev_u<threshold and u>threshold:
+            if prev_u<self.threshold and u>self.threshold:
                 self.set_bounds(self.params['alpha0'],self.params['alpha0'],self.thetalb,self.thetaub)
             else:
                 self.set_bounds(self.alphalb,self.alphaub,self.thetalb,self.thetaub)
@@ -463,15 +473,53 @@ class System:
 
             current_quantities = self.get_intermediate_quantities()
             for key in quantities.keys():
-
                 quantities[key][:,i] = current_quantities[key]
 
             
 
             
-        return states, quantities
+        return states, quantities, t
+    
+    def get_force_response(self, n=250):
+        """
+        Computes the force response of the system for a given range of angles of the left leg.
+        """
+        alpha0 = self.params['alpha0']
+        alpha_range = np.linspace(alpha0, -alpha0, n)
+        force_residuals = np.zeros((len(alpha_range), 2))
+        d0 = self.params['L1']*(np.sin(self.params['alpha0'])-np.sin(alpha_range))
+        bub = np.copy(self.bounds.ub)
+        blb = np.copy(self.bounds.lb)
+        original_ub = np.copy(self.bounds.ub)
+        original_lb = np.copy(self.bounds.lb)
 
-    def plot_system(self, fig = None, ax = None):
+        for i, alpha in enumerate(alpha_range):
+        # update the bounds
+            blb[::2] = alpha
+            bub[::2] = alpha
+
+            self.bounds.ub = bub
+            self.bounds.lb = blb
+        # solve for the equilivrium state
+            self.solve_equilibrium()
+
+        # get the force residuals
+            force_residuals[i] = self.compute_force_residuals()[0]
+        force_response = -force_residuals[:, 0]
+
+        #restore the bounds
+        self.bounds.ub = original_ub
+        self.bounds.lb = original_lb
+
+        return force_response, d0
+    
+    def get_threshold_stiffnesses(self, d6max = 33e-3):
+        force_response, d0 = self.get_force_response()
+
+        results = phf.find_tangent_lines(np.vstack((d0,force_response)).T,[d6max,0])
+        return results
+
+    def plot_system(self, fig = None, ax = None, plot_indicators = False):
         if fig is None:
             fig = plt.figure()
         if ax is None:
@@ -554,16 +602,16 @@ class System:
                 self.right_spring_lines.append(right_spring_mech)
             else:
                 self.right_spring_lines.append(None)
-
+            
             #plot a point above the bifurcation element with a box marker
-            indicator, = plt.plot(points[7,0],z_loc,points[7,1]+30e-3,'ks')
-            plt.setp(indicator, markersize=10)
-            plt.setp(indicator, markeredgecolor='k')
-            plt.setp(indicator, zorder=10)
+            indicator = ax.scatter(points[7,0], z_loc, points[7,1]+30e-3, marker='s', s=100, edgecolors='k', zorder=10,color='k')
             self.indicators.append(indicator)
             # color the box marker white if the bifurcation element is in the off state, which is when theta is positive
-            if cell.theta>0:
+            if cell.theta > 0:
                 plt.setp(indicator, color='w')
+            if not plot_indicators:
+                #hide the indicator
+                plt.setp(indicator, visible=False)
 
         ax.set_xlim3d(-0.025, 0.1)
         ax.set_ylim3d(-0.05, self.cell_spacing*self.n+0.05)
@@ -642,9 +690,9 @@ class System:
 
     
     def get_configuration(self):
-        betas = [cell.beta for cell in self.unit_cells]
+        thetas = [cell.theta for cell in self.unit_cells]
         
-        return [1 if beta<0 else 0 for beta in betas]
+        return [1 if theta<0 else 0 for theta in thetas]
     
     def set_configuration(self, configuration):
         #check that configuration is valid
@@ -779,6 +827,9 @@ class Spring:
         self.u1_lead = R / mod_R
 
     def compute_with_leads(self, xa, ya, za, xb, yb, zb):
+        R = np.array([xb, yb, zb]) - np.array([xa, ya, za])
+        mod_R = np.linalg.norm(R)
+        self.u1_lead = R / mod_R
         # Calculate the new start and end points for the spring using lead lengths
         spring_start = np.array([xa, ya, za]) + self.u1_lead * self.lead_length
         spring_end = np.array([xb, yb, zb]) - self.u1_lead * self.lead_length

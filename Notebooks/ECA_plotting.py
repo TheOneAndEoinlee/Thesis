@@ -102,9 +102,14 @@ def plotSetup(r = [0,1],fig= None,ax = None,spdim = [1,1],i=1,proj = 'persp',ele
     ax.set_xlim(r)
     ax.set_ylim(r)
     ax.set_zlim([0, s*r[1]])
-    ax.set_xlabel('x1',labelpad=0)
-    ax.set_ylabel('x2',labelpad=0)
-    ax.set_zlabel('x3',labelpad=0)
+    # ax.set_xlabel(,labelpad=0)
+    # ax.set_ylabel(,labelpad=0)
+    # ax.set_zlabel(,labelpad=0)
+    ax.text(0.6, 0, 0.15, r'$u_{i-1}$', horizontalalignment='center', verticalalignment='center',size=12,zorder=12)
+    ax.text(0, 0.2, 0.1, r'$u_i$', horizontalalignment='center', verticalalignment='center',size=12,zorder=12)
+    ax.text(-0.15, -0.15, 0.6, r'$u_{i+1}$', horizontalalignment='center', verticalalignment='center',size=12,zorder=12)
+
+
     ax.set_box_aspect((1,1,s))
     ax.view_init(elev=elev, azim=azim)
     ax.zaxis._axinfo['juggled'] = (1,2,0)
@@ -132,13 +137,34 @@ def plot_cube_with_planes(ax,normal, offset1, offset2):
         dot_product2 = np.dot(normal, vertex) - offset2
 
         if dot_product1 * dot_product2 < 0:
-            ax.scatter(*vertex, color='black', edgecolor='black', s=300, marker='s')
+            ax.scatter(*vertex, color='black', edgecolor='black', s=300, marker='s',zorder=10)
         else:
-            ax.scatter(*vertex, color='white', edgecolor='black', s=300, marker='s')
+            ax.scatter(*vertex, color='white', edgecolor='black', s=300, marker='s',zorder=10)
 
     # Draw the planes intersecting the cube
     pl1 = drawPlaneInCube(ax, normal, offset1)
     pl2 = drawPlaneInCube(ax, normal, offset2)
     return (pl1,pl2)
 
+def plot_triad_quiver(ax, arrow_length):
+    """
+    Plot a triad quiver on a given 3D axis.
+    
+    Parameters:
+        ax (matplotlib axis): The 3D axis where the quiver will be plotted.
+        arrow_length (float): The length of each arrow in the triad.
+    """
+    # Origin point
+    origin = [0, 0, 0]
+
+    # Define arrow directions and lengths
+    arrow_colors = ['b', 'g', 'r']
+
+    # Plot arrows (x, y, z)
+    ax.quiver(origin, origin, origin, 
+              arrow_length, 0, 0, color=arrow_colors[0], arrow_length_ratio=0.1,zorder=0)
+    ax.quiver(origin, origin, origin, 
+              0, arrow_length, 0, color=arrow_colors[1], arrow_length_ratio=0.1,zorder=0)
+    ax.quiver(origin, origin, origin, 
+              0, 0, arrow_length, color=arrow_colors[2], arrow_length_ratio=0.1,zorder=0)
 

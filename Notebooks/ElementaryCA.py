@@ -124,23 +124,25 @@ def binlist2dec(binary,inverted=-1):
 def rulebin(rule):
     return [int(x)for x in f'{rule:#010b}'[-1:1:-1]]
 
+def permuteRule(rule,perm):
+    ruleb = rulebin(rule) #creates binary representation by rule number e.g. 110 -> [0,1,1,0,1,1,1,0]
+    idx = list(range(8)) #creates index list [0,1,2,3,4,5,6,7]
+    for i in range(8):
+        ibin = [int(x) for x in f'{i:#05b}'[2:]] #converts index to binary index e.g. 5 -> [1,0,1]
+        permed = [ibin[j] for j in perm] #permutes binary index e.g. [1,0,1] -> [0,1,1]
+        newibin = binlist2dec(permed) #sort ibin by new indices e.g. [0,1,1] -> 3
+        idx[i] = newibin #replace index with new index e.g. 5 -> 3
+    newruleb = [ruleb[i] for i in idx] #sort ruleb by new indices
+    newrule = binlist2dec(newruleb,inverted=1) #convert binary representation to rule number
+
+    return newrule
+
 def getPermutations(rule):
     #gets all equivalent permutations of a Rule by permuting inputs
-    ruleb = rulebin(rule) #creates binary representation by rule number
     rules ={rule}
     
     for perm in permutations([0,1,2]):
-        idx = list(range(8))
-        for i in range(8):
-            ibin = [int(x) for x in f'{i:#05b}'[2:]] #converts index to binary index
-            permed = [ibin[j] for j in perm]
-            newibin = binlist2dec(permed)
-            idx[i] = newibin
-
-        newruleb = [ruleb[i] for i in idx]
-        newrule = binlist2dec(newruleb,inverted=1)
-        
-        
+        newrule = permuteRule(rule,perm)
         rules.add(newrule)
     return rules
 def getGEC(rule):
@@ -193,4 +195,44 @@ def dict_to_lists(function_dict):
         else:
             false_inputs.append(np.array(inputs))
     return true_inputs, false_inputs
+
+def separable_rules():
+    ec =   [254, 252, 72, 248, 240,
+            22, 232, 126, 30, 6,
+            106, 192, 60, 124, 224, 
+            104, 62, 183, 129, 128]
+
+    pls=   [[1,1,1],[1,1,0],[2,1,2],[2,1,1],[1,0,0],
+            [1,1,1],[1,1,1],[1,1,1],[2,1,1],[2,1,1],
+            [1,1,2],[1,1,0],[1,1,0],[2,2,1],[2,1,1],
+            [1,1,1],[2,2,1],[2,1,2],[1,1,1],[1,1,1]]
+
+    Ts = [(0.9,3.2),(0.5,2.5),(2.5,3.5),(1.5,4.5),(0.5,1.5),
+        (0.5,1.5),(1.5,3.5),(0.8,2.2),(0.75,2.4),(0.5,1.5),
+        (1.5,3.5),(1.5,2.5),(0.5,1.5),(1.5,4.5),(2.5,4.5),
+        (1.5,2.5),(0.8,3.2),(2.5,3.5),(0.5,2.5),(2.5,3.5)]
+
+
+    rule_subset= [rule for rule in ec if rule not in [183,129]]
+    rules = {rule: (pl,T) for rule,pl,T in zip(ec,pls,Ts) if rule in rule_subset}
+    newRules = {}
+    ruleSets = []
+
+    shift_left = lambda lst, spaces: lst[spaces % len(lst):] + lst[:spaces % len(lst)]
+    shift_right = lambda lst, spaces: lst[-spaces % len(lst):] + lst[:-spaces % len(lst)]
+
+    for i,rule in enumerate(rules.keys()):
+        ruleSets.append(set())  # change from dictionary to set
+        for j  in range(3):
+            perml = shift_left([0,1,2],j)
+            permr = shift_right([0,1,2],j)
+            newpl = [rules[rule][0][i] for i in permr]
+            
+            newRule = permuteRule(rule,perml)
+            newRules[newRule] = (newpl,rules[rule][1])
+            ruleSets[i].add(newRule)  # update to use add method on set
+    return newRules
+
+
+
 
