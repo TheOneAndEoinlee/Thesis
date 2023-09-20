@@ -54,6 +54,11 @@
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{PRBM_svg-tex.pdf}}%
+    \put(0.86910433,0.55534991){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{δ}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{PRBM_svg-tex.pdf}}%
+    \put(0.26040522,0.70504639){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{d}\textit{t}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{PRBM_svg-tex.pdf}}%
+    \put(0.76286668,0.6548002){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{d}\textit{b}\end{tabular}}}}%
     \put(0.32100429,0.60980206){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{k}\textit{2}\end{tabular}}}}%
     \put(0.32100429,0.67315273){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{k}\textit{1}\end{tabular}}}}%
     \put(0.32100429,0.55522537){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{k}\textit{3}\end{tabular}}}}%
