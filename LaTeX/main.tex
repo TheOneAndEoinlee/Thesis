@@ -1,3 +1,4 @@
+
 \documentclass[a4paper]{article}
 
 %%%%%%%% CREATE DOCUMENT STRUCTURE %%%%%%%%
@@ -11,6 +12,10 @@
 \usepackage[a4paper,top=3cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
 
 %% Useful packages
+\usepackage{svg}
+\svgsetup{
+    inkscape=pdf
+}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{graphicx}
@@ -22,7 +27,9 @@
 \usepackage{float}
 \usepackage{titling} 
 \usepackage{blindtext}
+\setlength{\marginparwidth}{2cm}
 \usepackage{todonotes}
+\usepackage{csquotes}
 \usepackage[
 backend=biber,
 style=numeric,
@@ -48,8 +55,7 @@ sorting=none
 \textsc{\LARGE Delft University of Technology}\\[1cm]
 
 % Document info
-\textsc{\Large LITERATURE RESEARCH \& PROJECT PROPOSAL}\\[0.2cm]
-\textsc{\large ME56010-22}\\[1cm] 										% Course Code
+									% Course Code
 \HRule \\[0.8cm]
 { \huge \bfseries Bi-threshold Gates for Mechanical Logic in Intelligent Metamaterials }\\[0.7cm]								% Assignment
 \HRule \\[2cm]
@@ -58,7 +64,7 @@ sorting=none
 Eoinlee Bley (5216737)\\[1.5cm]	
 \emph{Supervisors:}\\
 Dr. Davood Farhadi Machekposhti\\
-Malte ten Wolde\\[1.5cm]
+Malte ten Wolde\\[0.5cm]
 % Author info
 in partial fulfillment of the requirements for the degree of \\[0.5cm]
 \textbf{Master of Science}\\
@@ -73,10 +79,21 @@ in Mechanical Engineering\\[0.5cm]
 \end{abstract}
 
 \tableofcontents
-
+\include{Preface}
+\include{Body}
+\include{Supplementary}
 %%%% SECTIONS
 %% Section 1
-\include{Preface}
+
+\newpage
+
+\begin{figure}
+    \centering
+    \includesvg[width=\textwidth]{images/SVGs/PRBM.svg}
+    \caption{1D Cellular Automata}
+    \label{fig:1DCA}
+\end{figure}
+
 
 
 %%%%%%%% EXTRA TIPS %%%%%%%%

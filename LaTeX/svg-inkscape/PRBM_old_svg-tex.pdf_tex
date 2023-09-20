@@ -1,0 +1,79 @@
+%% Creator: Inkscape 1.2.1 (9c6d41e410, 2022-07-14), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'PRBM_old_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{349.47231176bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.71533746)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{PRBM_old_svg-tex.pdf}}%
+    \put(0.3408729,0.65708556){\color[rgb]{0.89803922,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}F\\\end{tabular}}}}%
+    \put(0.17158863,0.05632592){\color[rgb]{0.42352941,0.74117647,0.89019608}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}L1\end{tabular}}}}%
+    \put(0.44874709,0.25857668){\color[rgb]{0.42352941,0.74117647,0.89019608}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}H1\end{tabular}}}}%
+    \put(0.89337648,0.30052499){\color[rgb]{0.42352941,0.74117647,0.89019608}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}L2\end{tabular}}}}%
+    \put(0.69444432,0.09527792){\color[rgb]{0.42352941,0.74117647,0.89019608}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}H2\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{PRBM_old_svg-tex.pdf}}%
+    \put(0.25170711,0.45879473){\color[rgb]{0.85098039,0.85098039,0.85098039}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}K\the\end{tabular}}}}%
+    \put(0.26586726,0.44738401){\color[rgb]{0.42352941,0.74117647,0.89019608}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}kθ\end{tabular}}}}%
+    \put(0.6457589,0.42814307){\color[rgb]{0.42352941,0.74117647,0.89019608}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}kΦ\end{tabular}}}}%
+    \put(0.68411242,0.54884557){\color[rgb]{0.42352941,0.74117647,0.89019608}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}kL\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{PRBM_old_svg-tex.pdf}}%
+    \put(0.51032655,0.44247676){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}δ1\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{PRBM_old_svg-tex.pdf}}%
+    \put(0.67662171,0.0080121){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}δ2\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{PRBM_old_svg-tex.pdf}}%
+    \put(0.23000954,0.2615729){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}θ\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{PRBM_old_svg-tex.pdf}}%
+    \put(0.72440024,0.25108584){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Φ\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{PRBM_old_svg-tex.pdf}}%
+    \put(0.57474726,0.53461307){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}δ3\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{PRBM_old_svg-tex.pdf}}%
+  \end{picture}%
+\endgroup%

@@ -1,0 +1,102 @@
+%% Creator: Inkscape 1.2.1 (9c6d41e410, 2022-07-14), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'EquilibriaFigure_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{4347.7459924bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.73248958)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.75254077,0.50632555){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\textit{r}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.77029004,0.48350507){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\textit{s}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.7666665,0.49749582){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{d}\textit{0}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.74070958,0.53336295){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{d}\textit{0}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.77895824,0.53386721){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{d}\textit{6}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.78693588,0.53029017){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\textit{s}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.73113043,0.53029017){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\textit{s}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.86262994,0.55854577){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{d}\textit{0}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.90119555,0.55936699){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{d}\textit{6}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.90213269,0.54727208){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\textit{s}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.85349765,0.54727208){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\textit{s}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.66475389,0.40709019){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Δ\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.78010434,0.39849168){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Δ\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.55672887,0.40709019){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Δ\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.43695521,0.69170324){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.43695521,0.72634504){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.43695521,0.65425595){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.43833864,0.61583282){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.43695521,0.57728772){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.43695521,0.54020636){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.43695521,0.508736){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{EquilibriaFigure_svg-tex.pdf}}%
+    \put(0.43695526,0.46751461){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\textit{F}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=23]{EquilibriaFigure_svg-tex.pdf}}%
+  \end{picture}%
+\endgroup%
