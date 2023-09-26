@@ -1,17 +1,17 @@
 # Fdb version 4
-["biber main"] 0 "main.bcf" "main.bbl" "main" 1695569285 -1
-  "main.bcf" 1695569285 106450 b70b9d6197cac106e3c1a12a05e832e8 "pdflatex"
+["biber main"] 0 "main.bcf" "main.bbl" "main" 1695736347 -1
+  "main.bcf" 1695736347 106450 b70b9d6197cac106e3c1a12a05e832e8 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1695569281 "c:/Users/eoinl/ThesisCode/Thesis/LaTeX/main.tex" "main.pdf" "main" 1695569285 0
-  "Body.aux" 1695569285 9323 31b11572542bf3e6a83e5d525d4f69c1 "pdflatex"
-  "Body.tex" 1695569280 20496 1b6817e5bb01621a81db97cd1ee3f357 ""
-  "Preface.aux" 1695569284 4899 f8449298fb7c1b47d4ad5202434e0d34 "pdflatex"
-  "Supplementary.aux" 1695569285 4745 8d60f801623e0de97399f54ec2ecd797 "pdflatex"
-  "Supplementary.tex" 1695207885 143 54483ae720fe6e3fecbb1414173979d9 ""
-  "c:/Users/eoinl/ThesisCode/Thesis/LaTeX/main.tex" 1695309430 3125 bcd4d57a94afed569f375376172f5efa ""
+["pdflatex"] 1695736345 "c:/Users/eoinl/ThesisCode/Thesis/LaTeX/main.tex" "main.pdf" "main" 1695736347 0
+  "Body.aux" 1695736347 11267 2b7b1eb924da4c122254eeb8c23df4e4 "pdflatex"
+  "Body.tex" 1695736340 24095 48f9a5560b2d20aa64095a1e660f377f ""
+  "Preface.aux" 1695736347 4899 f8449298fb7c1b47d4ad5202434e0d34 "pdflatex"
+  "Supplementary.aux" 1695736347 4973 5ab519c70e18fee8487c280d3abe83c8 "pdflatex"
+  "Supplementary.tex" 1695628689 1422 a749f10d45915561928ff29c58c4063f ""
+  "c:/Users/eoinl/ThesisCode/Thesis/LaTeX/main.tex" 1695736340 3127 76694d8caab3057ad798b845256a8cb1 ""
   "c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1695039396 2971 def0b6c1f0b107b3b936def894055589 ""
   "c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1695039396 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1695040209 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -243,21 +243,20 @@
   "c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1695045061 4721891 a1ad6110735ab1e410b2de96572ab420 ""
   "c:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1695045174 8183612 04266fabb9d968cd04fa6f395c7d65d2 ""
   "c:/texlive/2023/texmf.cnf" 1695045036 713 e69b156964470283e0530f5060668171 ""
-  "images/Rule110Simulation.png" 1695307953 139136 3d394dcda741d85e1b2691ed20c695e1 ""
   "images/SVGs/Cube.pdf" 1695211919 55531 54e4882d2e5a267eda4309d66c7c8a68 ""
   "images/SVGs/Equilibria1.pdf" 1695208213 92397 323df2ab751a6dcf678da595016361d3 ""
   "images/SVGs/Equilibria2.pdf" 1695148595 329202 b4ac43333d36f1b1e229a39a66718723 ""
   "images/SVGs/Equilibria3.pdf" 1695148615 29203 a415053cf43bdab2c986b091404345c4 ""
   "images/SVGs/PRBM.pdf" 1695224127 83971 fd47aa12cf30f45499617fb36e0a8491 ""
+  "images/SVGs/Simulation.pdf" 1695645359 886827 a0b5327276854b64220c0e9b435db14f ""
   "images/SVGs/stiffness_ratio.pdf" 1695304789 37419 7b91ec4c68b27f7965e8bf6129901d07 ""
   "images/SVGs/v5Assembly.pdf" 1695307239 249158 b6b80b4e726638f3afaced9d931f55ec ""
   "images/TU_delft_logo.jpg" 1695038200 223574 0e88875469a96842b9de20ff3fb2e2e9 ""
-  "main.aux" 1695569285 1433 cd813209fc4f014ff319fb518abcacbd "pdflatex"
+  "main.aux" 1695736347 2100 009b77d8b1866093a366ce2b2d290996 "pdflatex"
   "main.bbl" 1695125243 0 d41d8cd98f00b204e9800998ecf8427e "biber main"
-  "main.out" 1695569285 879 ad4797eb2ca8f6f591544493c2640dc3 "pdflatex"
-  "main.run.xml" 1695569285 2224 bc6149f5caee4074188e1b81a66978d0 "pdflatex"
-  "main.tex" 1695309430 3125 bcd4d57a94afed569f375376172f5efa ""
-  "main.toc" 1695569285 457 3b738e75e10d5afba4b73dfc9d64c5c9 "pdflatex"
+  "main.out" 1695736347 976 e39313d8fff69e67dccb36d82d062301 "pdflatex"
+  "main.run.xml" 1695736347 2224 bc6149f5caee4074188e1b81a66978d0 "pdflatex"
+  "main.tex" 1695736340 3127 76694d8caab3057ad798b845256a8cb1 ""
   "preface.tex" 1695200536 2007 0f75ed8c7c9940bce9d8bbef78f53fbd ""
   (generated)
   "Body.aux"
@@ -269,5 +268,4 @@
   "main.out"
   "main.pdf"
   "main.run.xml"
-  "main.toc"
   (rewritten before read)

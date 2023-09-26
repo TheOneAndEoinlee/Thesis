@@ -2,3 +2,11 @@
 \section{Supplementary Material}
 \subsection*{Bi-planar separability of ECA rules}
 \label{sec:Bi-planar separability of ECA rules}
+\subsection*{Python Script for Pseudo-Rigid Body Simulation}
+The simulation models the kinematics of the rigid bodies using the forward kinematics of the mechanism. Each unit cell has two degrees of freedom corresponding to the displacements \( d^t \) and \( d^b \), modelled as link angles \(\alpha\) and \(\theta\) respectively. The energy of the system is calculated using the pseudo-rigid body model, with the energy of each spring calculated using the linear spring force-displacement relationship. The input is modelled as the triangular wave function of the clock signal \(\epsilon\) with amplitude calculated from the maximum displacement of the bifurcation element \( \delta \) according to the selected ECA rule with 1000 timesteps per actuation cycle. This boundary condition is modeled as a compression only spring with sufficiently high stiffness to act as a rigid constraint. The equilibrium of the system is determined each timestep by minimizing the total energy of the system using Sequential Least Squares Programming with derivative information with initial state being the state of the previous time step. 
+\label{sec:Python Script for Pseudo-Rigid Body Simulation}
+
+
+\subsection*{Compliant Mechanism Design}
+\label{sec:Compliant Mechanism Design}
+

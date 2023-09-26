@@ -9,7 +9,7 @@
     \item Non-volatile mechanical memory exists but requires complex peripherals or intricate energy landscapes.
     \item Consideration: Cellular automata as a potential architecture to address data exchange bottleneck.
 \end{itemize}
-\section{Results \& Discussion}
+\section{Results}
 
 \subsection*{Elementary Cellular Automata Formalism}
 Cellular automata (CA) are grid-based computational models where each cell evolves over time according to a rule set \( R \). In Elementary Cellular Automata (ECA), the domain is one-dimensional and the state space is binary, \( S = \{0, 1\} \). Each cell's future state is determined by its current state and those of its immediate neighbours.
@@ -70,9 +70,9 @@ f(N) = \begin{cases}
 
 \subsection*{Concept Mechanism}
 
-In light of the mathematical formalism presented, we introduce a conceptual mechanical metamaterial designed to embody the logic and behavior of Elementary Cellular Automata (ECAs). This metamaterial is constructed from an array of interconnected unit cells, each serving as a mechanical analog to the bi-threshold perceptron.
+In light of the mathematical formalism presented, we introduce a conceptual mechanical metamaterial designed to embody the logic and behavior of Elementary Cellular Automata (ECAs). This metamaterial is constructed from an array of interconnected unit cells, each serving as a mechanical analog to the bi-threshold pergeptron gate.
 
-The core of each unit cell is a tristable element, functioning as the decision-making component. The tristable element has three stable states, akin to the three regions separated by the two parallel planes in the cube of our geometric representation. This element is responsible for holding the output state of the cell, dictated by the weighted sum of its inputs.
+The core of each unit cell is a tristable element, functioning as the decision-making component. The tristable element has three stable states, akin to the three regions separated by the two parallel planes in the cube of our geometric representation. This element is responsible for holding the output state of the cell, dictated by the weighted sum of its inputs. 
 
 Each unit cell is interconnected via coupling springs, which transmit mechanical signals between adjacent cells. The stiffness values of the coupling springs \(k_i\) act as the weights \( w_i \) in the bi-threshold perceptron equation. These values determine the force interactions and state transitions between adjacent unit cells. The tristable elements have multiple stable states, analogous to the regions separated by planes in the cube of our geometric ECA representation.
 
@@ -105,8 +105,8 @@ The signal transmission block is connected to the bifurcation element via a spri
 \subsection*{Working Principle/Kinetics}
 
 \autoref*{fig:Equilibria and Tension-only spring}A shows the theoretical force-displacement behaviour of the tristable element, graphing the reaction force on the tristable shuttle as a function of its horizontal displacement \(d^t\). The three stable equilibria and corresponding configuration of the mechanism are shown. 
-The specific behaviour is a function of all the stiffnesses and the chosen geometric dimensions and proportions of the mechanism. 
-% The specific derivation of the force-displacement response is detailed in Appendix \ref*{sec:Force-displacement response of the tristable element}.
+The specific behaviour is a function of all the joint stiffnesses and the chosen geometric dimensions and proportions of the mechanism. These design parameters must be precisely calculated and calibrated to achieve the precise desired behaviour, as variation can lead to mono-stable, bi-stable, or quad-stable behaviour. The specific derivation of the force-displacement response is detailed in Appendix \ref*{sec:Compliant Mechanism Design}.
+
 \todo{Create appendix for this derivation}
 
 The theoretical force-displacement behavior of the coupling tension-only springs is depicted in \autoref*{fig:Equilibria and Tension-only spring}B. Specifically, the spring behaves as a linear element with stiffness \( k_i \) when its elongation is positive. For negative elongation, the spring is slack, resulting in zero force. The stiffness \( k_i \) serves as a design parameter for selecting the specific ECA rule to be implemented.
@@ -124,13 +124,13 @@ The theoretical force-displacement behavior of the coupling tension-only springs
 
 
 
-    In \autoref*{fig:Equilibria under actuation}, the force-displacement behavior of the unit cell is depicted under varying conditions of coupling spring activations. When the bifurcation shuttle is fixed at a displacement \( \delta \), denoted as \( d^b = \delta \), the cumulative force from the activated coupling springs is plotted alongside the force-displacement curve of the tristable element, \( F_r(d^t) \).
+In \autoref*{fig:Equilibria under actuation}, the force-displacement behavior of the unit cell is depicted under varying conditions of coupling spring activations. When the bifurcation shuttle is fixed at a displacement \( \delta \), denoted as \( d^b = \delta \), the cumulative force from the activated coupling springs is plotted alongside the force-displacement curve of the tristable element, \( F_r(d^t) \).
 
-    Equilibrium points emerge where these two force-displacement curves intersect and are represented as red dots on the difference plot. The equilibrium points correspond to the configurations where the cumulative force \( F_s \) from the coupling springs is equal to the reaction force \( F_r \) of the tristable element: \( F_r(d^t) = F_s(d^t, d^b) \).
-    
-    Now, let's address the "disappearance" of the equilibrium points. An equilibrium point "disappears" when the force-displacement line of the activated coupling springs no longer intersects with specific regions of the \( F_r \) curve—specifically, the regions around its local maxima. This occurs when the slope of the force-displacement curve for the activated springs, pivoting about the point \( d^b = \delta \), not only fails to intersect but actually surpasses these local maxima regions of \( F_r(d^t) \).
-    
-    In this context, snapthrough events happen as follows: the tristable element transitions from its current equilibrium state to an adjacent one depending on whether \( F_r < F_s \) or \( F_r > F_s \). This transition is triggered when the equilibrium state corresponding to the current \( F_r \) and \( F_s \) values no longer exists. This mechanical action serves as the physical embodiment of the decision boundaries in the bi-threshold perceptron.
+Equilibrium points emerge where these two force-displacement curves intersect and are represented as red dots on the difference plot. The equilibrium points correspond to the configurations where the cumulative force \( F_s \) from the coupling springs is equal to the reaction force \( F_r \) of the tristable element: \( F_r(d^t) = F_s(d^t, d^b) \).
+
+Now, let's address the "disappearance" of the equilibrium points. An equilibrium point "disappears" when the force-displacement line of the activated coupling springs no longer intersects with specific regions of the \( F_r \) curve—specifically, the regions around its local maxima. This occurs when the slope of the force-displacement curve for the activated springs, pivoting about the point \( d^b = \delta \), not only fails to intersect but actually surpasses these local maxima regions of \( F_r(d^t) \).
+
+In this context, snapthrough events happen as follows: the tristable element transitions from its current equilibrium state to an adjacent one depending on whether \( F_r < F_s \) or \( F_r > F_s \). This transition is triggered when the equilibrium state corresponding to the current \( F_r \) and \( F_s \) values no longer exists. This mechanical action serves as the physical embodiment of the decision boundaries in the bi-threshold perceptron.
 
 
 \begin{figure}[H]
@@ -150,6 +150,7 @@ In the mechanical system, these weights \( w_i \) are analogous to the stiffness
 The thresholds \( T_1 \) and \( T_2 \) correspond to the critical effective stiffnesses of the cumulative active coupling springs at which the tristable element undergoes snap-through transitions. These critical effective stiffnesses are determined by the slopes of the lines that are tangent to the specific maxima regions on the \( F_r(d^t) \) force-displacement curve. These tangent lines are anchored at the point where \( d^b = \delta \) on the \( d^t \) axis.
 
 \subsection*{Parametric determination of ECA rule}
+\todo{move to methods}
 Here we outline a parametric strategy for physically embodying a specific ECA rule, leveraging its geometric representation as parallel planes. The aim is to precisely calibrate the stiffness values \( k_i \) of the coupling springs and the maximum displacement \( \delta \) of the bifurcation element to manifest the desired ECA rule.
 
 A pivotal insight is that modifying the bifurcation element's maximum displacement \( \delta \) alters the slopes of the lines tangent to the \( F_r(d^t) \) curve, as shown in \autoref*{fig:stiffness ratio}. These tangent lines are anchored at the point \( d^b = \delta \) on the \( d^t \) axis. This adjustment effectively varies the ratio between the bi-threshold perceptron's \( T_1 \) and \( T_2 \) values. Therefore, by selecting a specific \( \delta \), we can control the orientation of the separating planes, aligning them with the desired ECA rule.
@@ -164,6 +165,8 @@ Subsequently, we can determine the coupling spring stiffnesses \( k_i \) that co
     \caption{This is a figure.}
     \label{fig:stiffness ratio}
 \end{figure}
+\todo{log scale?}
+\todo{show link between slopes in A and B clearer with label}
 
 \subsection*{Implementation of Rule 110}
 
@@ -183,7 +186,7 @@ To demonstrate the efficacy of this parametric design strategy, we implement Rul
     k_i = \frac{n_i \times \kappa_1}{T_1}
     \]
 \end{description}
-
+\todo{Explain bounds of delta}
 
 The final mechanical parameters for a given ECA rule, such as Rule 110, are summarized in \autoref*{tab:Parametric Design Values for Rule 110}.
 
@@ -205,8 +208,7 @@ Parameter & Value & Units \\
 \label{tab:Parametric Design Values for Rule 110}
 \end{table}
 
-\autoref*{fig:Equilibria corresponding to Rule 110} shows the equilibrium configurations of the tristable element for Rule 110 corresponding to the eight vertices of the cube representation. The effective stiffness of the coupling springs relative to the critical stiffnesses is shown for each neighborhood configuration
-
+\autoref*{fig:Equilibria corresponding to Rule 110} demonstrates the one-to-one correspondence between the tristable element's equilibrium configurations and the cube representation of Rule 110. Each equilibrium state is directly tied to a specific combination of activated coupling springs. The relative effective stiffness of these springs, when compared to two critical stiffness thresholds, serves as the mapping M that locates each vertex relative to the separating planes in the cube representation.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/SVGs/Equilibria3.pdf}
@@ -215,19 +217,67 @@ Parameter & Value & Units \\
 \end{figure}
 
 
-\subsection*{Simulation}
+\subsection*{Pseudo-Rigid Body Simulation}
+
+
+The culmination and main result of the theoretical framework and concept mechanism developed thus far is a pseudo-rigid body model simulation of the unit cell and complete system, implemented in a custom Python script. The simulation implements the kinematics and kinetics of the simplified unit cell in \autoref*{fig:Mechanism}B, and models the nonlinear interaction between cells, and the simultanoeous actuation of the bifurcation mechanisms. The physical values for parameters are from \ref*{sec:Compliant Embodiment and FEA Validation}. 
+\todo{explain basic procedure}
+The simulation's objectives are twofold:
+\begin{enumerate}
+    \item To produce the force-displacement graphs that enable the parametric design strategy for implementing a specific ECA rule.
+    \item To provide a computational testing ground for the system's time evolution, thereby serving as a preliminary validation of the parametric design strategy for embodying a specific ECA rule.
+\end{enumerate}
 
 
 
-\begin{figure}{H}
+The comprehensive codebase for the simulation can be found in Appendix \ref*{sec:Python Script for Pseudo-Rigid Body Simulation}.
+
+\autoref*{fig:Simulation}A portrays a time series simulation of a 10-unit cell system. Originating from a solitary 'on' cell at the rightmost edge, the system evolves in accordance with Rule 110. The clock signal \( \epsilon \) is represented in orange. Each unit cell's bifurcation element orientation is indicative of its state—positive angle \( \theta \) equates to 'off', while negative \( \theta \) signifies 'on'. The simulation's outcomes are in harmony with theoretical projections, thereby corroborating the efficacy of the parametric design strategy, while setting the stage for further validation through FEA simulations.
+
+
+
+
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{images/Rule110Simulation.png}
-    \caption{This is a figure.}
+    \includegraphics[width=\textwidth]{images/SVGs/Simulation.pdf}
+    \caption{A. Rendering of psuedo-rigid body model at \(t_0\) and \(t_{10}\) showing arrangement of unit cells and interconnecting springs. B.Time series simulation of the system with 10 unit cells. Positive angle \(\theta\) correspons to the "off" state of the unit cell, while negative angle \(\theta\) corresponds to the "on" state. The clock signal \(\epsilon\) is shown in orange. The system evolves from a single "on" cell at the right edge of the domain according to Rule 110. C. The reaction force felt by the input displacement boundary condition \(\varepsilon\).}
     \label{fig:Simulation}
 \end{figure}
 
 
-\subsection*{Compliant Embodiment}
+\section{Discussion}
+
+\begin{itemize}
+    \item Equivalence classes of ECA rules that can be implemented
+    \item Constraints of design approach
+    \item Manufacturability difficulties
+    \item Scalability
+    \item Limitations of pseudo-rigid body model
+    \item Limitations of ECAs as a computing architecture
+    \item Potential applications
+
+\end{itemize}
+\section{Methods}
+\subsection*{Compliant Embodiment and FEA Validation}
+\label{sec:Compliant Embodiment and FEA Validation}
+
+
+
+\subsubsection*{Parameter calculations}
+Bistable element design
+
+Tristable element design from Chen paper criteria + own criteria
+
+Bifurcation element design
+
+Coupling spring design
+
+\subsubsection*{FEA Validation of Tristable Element}
+
+Force-displacement response compared to theoretical model
+
+Stress limits for prototype design. 
 
 \begin{figure}
     \centering

@@ -135,9 +135,8 @@ class UnitCell:
                  + K3*K3_tog*(d6_next-d0-tog_offset)**2
                  )
 
-        # define the force of the system
-        #This is a bug, this is the moment of the force, since alpha is the angle of the left leg
-        #this explains the other bug!!!
+        # define the reaction moments of the system
+
         M_d = sm.diff(E, alpha)
         M_b = sm.diff(E, theta)
 
@@ -604,11 +603,11 @@ class System:
                 self.right_spring_lines.append(None)
             
             #plot a point above the bifurcation element with a box marker
-            indicator = ax.scatter(points[7,0], z_loc, points[7,1]+30e-3, marker='s', s=100, edgecolors='k', zorder=10,color='k')
+            indicator = ax.scatter(points[7,0], z_loc, points[7,1]+30e-3, marker='s', s=100, edgecolors='k', zorder=100,color='k')
             self.indicators.append(indicator)
             # color the box marker white if the bifurcation element is in the off state, which is when theta is positive
             if cell.theta > 0:
-                plt.setp(indicator, color='w')
+                plt.setp(indicator, color=[1,1,1],edgecolors='k')
             if not plot_indicators:
                 #hide the indicator
                 plt.setp(indicator, visible=False)
