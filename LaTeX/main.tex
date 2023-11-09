@@ -35,8 +35,9 @@ backend=biber,
 style=numeric,
 sorting=none
 ]{biblatex}
-%\addbibresource{references.bib}
+\addbibresource{references.bib}
 %\addbibresource{ref.bib}
+
 
 \usepackage{xcolor}
 \definecolor{darkgreen}{rgb}{0.0, 0.4, 0.0}
@@ -81,7 +82,8 @@ in Mechanical Engineering\\[0.5cm]
 % \tableofcontents
 \include{Preface}
 \include{Body}
-\include{Supplementary}
+\printbibliography
+% \include{Supplementary}
 %%%% SECTIONS
 %% Section 1
 
